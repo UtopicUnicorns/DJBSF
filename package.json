@@ -1,0 +1,12 @@
+{
+	"name": "artemis_remaster",
+	"version": "0.0.1",
+	"description": "Remaster of Artemis",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Richard Dorrestijn",
+	"license": "GPL-3.0-or-later",
+	"dependencies": {}
+}
