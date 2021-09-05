@@ -9,48 +9,43 @@ async function start() {
 
 		heart_beat.rhythm(im); //start the process
 
-		//send_message.send(MESSAGE, CHANNEL_ID, im); //Example message send (MESSAGE, CHANNEL_ID, im)
-
 		//When we get data we have to catch it, which happens here
 		mail_man.on('view_slash', async (dat) => {
-			console.log(dat);
+			if (!dat) return;
+
+			if (dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\nCommand Guild: ${dat.guild_id}\n\n`);
+			
+			if (!dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\n\n`);
 		});
 
 		/*When a user triggers an user application command(rightclick a user) then we catch it here*/
-		mail_man.on('interaction_create_user', async (dat) => {
-			console.log(dat);
+		mail_man.on('interaction_create_user', async (client, dat) => {
+			//console.log(client, dat);
+
+			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
 
 		/*When a user triggers a message application command(rightclick a message) it will be caught here*/
-		mail_man.on('interaction_create_message', async (dat) => {
-			console.log(dat);
+		mail_man.on('interaction_create_message', async (client, dat) => {
+			//console.log(client, dat);
+
+			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
 
 		/*When a user triggers a slash command(beging with /) we catch it here*/
-		mail_man.on('interaction_create_slash', async (dat) => {
-			console.log(dat);
+		mail_man.on('interaction_create_slash', async (client, dat) => {
+			//console.log(client, dat);
+
+			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
-		mail_man.on('ready', async (dat) => {
-			//Slash command
-			let json1 = JSON.stringify({
-				type: 1,
-				name: 'permissions',
-				description: 'Get or edit permissions for a user or a role',
-				default_permission: true,
-				options: [],
-			});
+		mail_man.once('ready', async (dat) => {
+			view_slash.v_s(im);
 
-			let json2 = JSON.stringify({ name: 'High Five', type: 2 }); //user command
-			let json3 = JSON.stringify({ name: 'High Five', type: 3 }); //message command
-			//register_slash(json3);
-			//register_slash_guild.r_s_g(json2, '660988248788697100'); //prefer guild over global due hour wait
-			//view_slash.v_s();
-			//delete_slash('883061058225463307');
-			//delete_slash('883058222565580890');
-			//delete_slash('883057862065127494');
-			//delete_slash('883052308089413653');
+			dat.guilds.forEach((g) => {
+				view_slash_guild.v_s_g(g.id, im);
+			});
 		});
 	} catch (error) {
 		console.log('');

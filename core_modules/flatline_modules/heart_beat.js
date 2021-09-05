@@ -89,16 +89,14 @@ module.exports = {
 			const rec_data = JSON.parse(message); //Convert message to JSON
 
 			if (rec_data.t === 'INTERACTION_CREATE') {
-				receive_slash.rec_s(rec_data.d.id, rec_data.d.token, im);
+				if (rec_data.d.type === 1) mail_man.emit('interaction_create_slash', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 
-				if (rec_data.d.type === 1) mail_man.emit('interaction_create_slash', rec_data); //Give mail_man the data to shoot out an event
+				if (rec_data.d.type === 2) mail_man.emit('interaction_create_user', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 
-				if (rec_data.d.type === 2) mail_man.emit('interaction_create_user', rec_data); //Give mail_man the data to shoot out an event
-
-				if (rec_data.d.type === 3) mail_man.emit('interaction_create_message', rec_data); //Give mail_man the data to shoot out an event
+				if (rec_data.d.type === 3) mail_man.emit('interaction_create_message', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 			}
 
-			if (rec_data.t === 'READY') mail_man.emit('ready', rec_data); //Give mail_man the data to shoot out an event
+			if (rec_data.t === 'READY') mail_man.emit('ready', rec_data.d); //Give mail_man the data to shoot out an event
 
 			if (rec_data.op === 10) pulse(1, rec_data); //op 10 code needs the first shock
 

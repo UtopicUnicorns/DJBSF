@@ -1,21 +1,10 @@
 module.exports = {
-	rec_s: async function (interaction_id, interaction_token, im) {
-		//Response for interaction
-		let json = JSON.stringify({
-			type: 4,
-			data: {
-				tts: false,
-				content: 'Congrats on sending your command!',
-				embeds: [],
-				allowed_mentions: { parse: [] },
-			},
-		});
-
+	v_s_g: async function (guild_id, im) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
-			path: `/api/interactions/${interaction_id}/${interaction_token}/callback`, //To messages endpoint with variable channel_id
-			method: 'POST', //We send something
+			path: `/api/applications/${application_id}/guilds/${guild_id}/commands`, //To messages endpoint with variable channel_id
+			method: 'GET', //We delete something
 			headers: {
 				'Content-Type': 'application/json', //We notify that we use JSON
 				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
@@ -25,8 +14,16 @@ module.exports = {
 		//We use the https module to send
 		const req = https.request(options, (res) => {
 			//We get some info in return
+			let fetch_data = [];
+
 			res.on('data', (d) => {
-				//const recData = JSON.parse(d); //we parse the received data to JSON
+				fetch_data.push(d);
+			});
+
+			res.on('end', () => {
+				let call_to = JSON.parse(fetch_data);
+
+				mail_man.emit('view_slash', call_to[0]); //Give mail_man the data to shoot out an event
 			});
 		});
 
@@ -34,8 +31,6 @@ module.exports = {
 		req.on('error', (error) => {
 			console.log('Error occured!');
 		});
-
-		req.write(json);
 
 		req.end();
 	},

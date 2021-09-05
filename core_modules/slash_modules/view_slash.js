@@ -23,7 +23,7 @@ module.exports = {
 			res.on('end', () => {
 				let call_to = JSON.parse(fetch_data);
 
-				mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+				mail_man.emit('view_slash', call_to[0]); //Give mail_man the data to shoot out an event
 			});
 		});
 

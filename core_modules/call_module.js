@@ -23,7 +23,9 @@ exports.summon_modules = async function () {
 
 	delete_slash_guild = await require('./slash_modules/delete_slash_guild'); //Slash event delete slash guild
 
-	view_slash = await require('./slash_modules/view_slash'); //Slash event call slash commands
+	view_slash = await require('./slash_modules/view_slash'); //Slash event call global slash commands
+
+	view_slash_guild = await require('./slash_modules/view_slash_guild'); //Slash event call guild slash commands
 
 	receive_slash = await require('./slash_modules/receive_slash'); //Slash event call slash commands
 
