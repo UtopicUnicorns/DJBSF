@@ -14,7 +14,7 @@ async function start() {
 			if (!dat) return;
 
 			if (dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\nCommand Guild: ${dat.guild_id}\n\n`);
-			
+
 			if (!dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\n\n`);
 		});
 

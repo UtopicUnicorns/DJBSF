@@ -12,7 +12,35 @@ module.exports = {
 
 		let ses_num; //API session number
 
+		let line_out_key;
+
 		const socket = new ws.WebSocket('wss://gateway.discord.gg/?v=9&encoding=json'); //Connect to discord gateway
+
+		/*Line out*/
+		const our_socket = new ws.WebSocket.Server({
+			port: 8080,
+		});
+
+		our_socket.on('connection', (data) => {
+			line_out_key = 'garbage';
+
+			data.send('I request a key from you.');
+			mail_man.on('raw', async (dat) => {
+				if (line_out_key === '666') {
+					data.send(JSON.stringify(dat));
+				}
+			});
+
+			data.on('message', function incoming(message) {
+				line_out_key = `${parseInt(message)}`;
+
+				if (line_out_key !== '666') {
+					data.send('I do not recognize your key!');
+				} else {
+					data.send('Authentication complete.');
+				}
+			});
+		});
 
 		async function pulse(shock, data) {
 			if (shock === 1) {
@@ -97,6 +125,8 @@ module.exports = {
 			}
 
 			if (rec_data.t === 'READY') mail_man.emit('ready', rec_data.d); //Give mail_man the data to shoot out an event
+
+			if (rec_data.d) mail_man.emit('raw', rec_data); //Give mail_man the rawe data
 
 			if (rec_data.op === 10) pulse(1, rec_data); //op 10 code needs the first shock
 
