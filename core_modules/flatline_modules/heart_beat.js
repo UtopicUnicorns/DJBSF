@@ -32,6 +32,7 @@ module.exports = {
 			});
 
 			data.on('message', function incoming(message) {
+				console.log(message);
 				line_out_key = `${parseInt(message)}`;
 
 				if (line_out_key !== '666') {

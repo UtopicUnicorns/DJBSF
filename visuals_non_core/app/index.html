@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My OS Platform</title>
+
+		<!--Style sheet-->
+		<link rel="stylesheet" href="./styles/primary.css" />
+	</head>
+	<body>
+		<canvas id="colour_background"></canvas>
+		<div class="background_logo">
+			<div class="logo_box">
+				DJBSF
+			</div>
+		</div>
+		<div class="background">
+			<!--Main content box-->
+			<div class="content_box">
+				<!--Main content box items-->
+				<div id="boxy" class="content_holder">
+					<textarea id="catch_text"></textarea>
+					<div id="replace_me">
+						<br /><br />Login Code: <input type="text" id="catch_phrase" /><br /><br />
+						<button id="login_button" class="button_main_menu" onclick="send_message()">Login</button><br /><br /><br /><br /><br />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Scripts starter-->
+		<script src="./scripts/background_animation.js"></script>
+
+		<script>
+			function send_message() {
+				event_drop.emit('pass_phrase', document.getElementById('catch_phrase').value);
+			}
+		</script>
+	</body>
+</html>
