@@ -31,7 +31,7 @@ function time_get(ver) {
 }
 
 win_grab.on('loaded', function () {
-	const socket = new ws.WebSocket('ws://localhost:8080'); //Connect to discord gateway
+	const socket = new ws.WebSocket('ws://localhost:1337'); //Connect to discord gateway
 	// First listener
 	working_emitter.on('pass_phrase', function (dat) {
 		socket.send(`${parseInt(dat)}`);
@@ -55,7 +55,6 @@ win_grab.on('loaded', function () {
 			win_grab.window.login_button.innerHTML = `${message}`;
 			win_grab.window.replace_me.innerHTML = '';
 			win_grab.window.boxy.style.height = '95%';
-			win_grab.window.catch_text.style.display = 'block';
 		}
 
 		async function parse_json(val) {
@@ -71,7 +70,21 @@ win_grab.on('loaded', function () {
 
 			if (message_out.t && message_out.t === 'MESSAGE_CREATE') {
 				let info = message_out.d;
-				win_grab.window.catch_text.value = `${time_get('full')}\n${info.author.username}#${info.author.discriminator}(${info.author.id})\n${info.content}\n\n${win_grab.window.catch_text.value}`;
+
+				let content_info = `
+					<details>
+						<summary class="summary_title">MESSAGE: ${time_get('full')}</summary>
+						<div class ="details_text">
+							User: ${info.author.username}#${info.author.discriminator}<br>
+							User ID: ${info.author.id}<br>
+							<hr>
+							${info.content.replace(/\<br\>/g, ';br;').replace(/\n/g, '<br>')}
+						</div>
+					</details>
+
+					<br>${win_grab.window.replace_me.innerHTML}`;
+
+				win_grab.window.replace_me.innerHTML = `${content_info}`;
 			}
 		}
 		send_stuff();

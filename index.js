@@ -72,13 +72,15 @@ async function check_config() {
 		rl.question('Hello!\nIt seems that this is your first time using this bot.\n\nWhat is your Discord userID? ', function (user_id) {
 			rl.question('What is your bot token? ', function (bot_token) {
 				rl.question('What is your bot applicationID? ', function (application_id) {
-					console.log(`I am going to write the config file for you.`);
+					rl.question('Please set a secret key for yourself for the websocket.', function (ws_key) {
+						console.log(`I am going to write the config file for you.`);
 
-					const collected_config = JSON.stringify({ user_id: `${user_id}`, bot_token: `${bot_token}`, application_id: `${application_id}` });
+						const collected_config = JSON.stringify({ user_id: `${user_id}`, bot_token: `${bot_token}`, application_id: `${application_id}` });
 
-					fs.writeFileSync('./core_modules/configs.json', collected_config);
+						fs.writeFileSync('./core_modules/configs.json', collected_config);
 
-					rl.close();
+						rl.close();
+					});
 				});
 			});
 		});

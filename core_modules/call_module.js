@@ -9,6 +9,8 @@ exports.summon_modules = async function () {
 
 	application_id = configuration_data.application_id; //Application ID
 
+	ws_key = configuration_data.ws_key; //Websocket key
+
 	heart_beat = await require('./flatline_modules/heart_beat'); //Module to initiate and continue a link
 
 	send_message = await require('./message_modules/send_message'); //message send module
