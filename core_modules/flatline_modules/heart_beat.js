@@ -12,6 +12,8 @@ module.exports = {
 
 		let ses_num; //API session number
 
+		let raw_cache = []; //raw API responses cache
+
 		const socket = new ws.WebSocket('wss://gateway.discord.gg/?v=9&encoding=json'); //Connect to discord gateway
 
 		/*We create our own socket to shoot out info to another client*/
@@ -31,6 +33,11 @@ module.exports = {
 					data.send('I do not recognize your key!'); //If key is not correct
 				} else {
 					data.send('Authentication complete.'); //If key is correct
+
+					/*Push cache*/
+					for (let i of raw_cache) {
+						data.send(JSON.stringify(i));
+					}
 
 					/*We shoot out raw events to out connected client*/
 					mail_man.on('raw', async (dat) => {
@@ -117,6 +124,8 @@ module.exports = {
 		/*Messages received trough socket end in here*/
 		socket.on('message', function incoming(message) {
 			const rec_data = JSON.parse(message); //Convert message to JSON
+
+			raw_cache.push(rec_data);
 
 			if (rec_data.t === 'INTERACTION_CREATE') {
 				if (rec_data.d.type === 1) mail_man.emit('interaction_create_slash', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
