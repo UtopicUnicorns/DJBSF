@@ -63,11 +63,15 @@
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Project_logo.png'); background-color: rgba(255, 0, 255, 0.2);">DJBSF</button><br />
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Discord_logo.png'); background-color: rgba(255, 0, 0, 0.2);">Discord</button><br />
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Artemis_logo.png'); background-color: rgba(0, 255, 0, 0.2);">Credits</button><br />
+					<div class="slide_container">
+						<input type="range" id="slider_size" class="slider" min="14.0" max="28.0" step="1" value="14.0" />
+						<output class="bubble" id="bubble"></output>
+					</div>
 				</div>
 
 				<!--Main content box items-->
 				<div class="content_stripe">
-					<div class="content_holder">
+					<div class="content_holder" id="content_holder">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ut nisl sit amet ante egestas sagittis. Nunc diam ligula, euismod a neque varius, interdum consectetur felis. Phasellus ut urna ante. Duis quis finibus nisl. Morbi laoreet sagittis condimentum. Sed tristique et dui id fermentum.
 						Fusce in dolor dui. Nam luctus, metus vel mollis hendrerit, purus orci consectetur nisi, vel viverra dolor nunc ac est. Vestibulum tincidunt quis dolor id facilisis. Curabitur pretium dignissim eros, id elementum ex mattis eu. Duis ut gravida erat. Morbi tristique mollis diam quis sagittis.
 						Cras lorem neque, dapibus vitae rutrum id, porttitor sed erat. Pellentesque fermentum pretium dui a ultrices. Fusce vel tempor massa, quis tristique dolor. Pellentesque condimentum sapien aliquam odio volutpat, a laoreet augue placerat. Integer metus lacus, vehicula non aliquam iaculis,
@@ -85,5 +89,6 @@
 
 		<!--Scripts starter-->
 		<script src="./scripts/background_animation.js"></script>
+		<script src="./scripts/slider_size.js"></script>
 	</body>
 </html>
