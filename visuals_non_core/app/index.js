@@ -87,7 +87,7 @@ win_grab.on('loaded', function () {
 				if (message_out.t === 'MESSAGE_CREATE') {
 					/*Contents to be send*/
 					let content_info = `
-					<details>
+					<details id="${message_out.t}">
 						<summary class="summary_title">${message_out.t}: ${time_get('full')} AUTHOR: ${info.author.username}</summary>
 						<div class ="details_text">
 							User: ${info.author.username}#${info.author.discriminator}<br>
@@ -103,7 +103,7 @@ win_grab.on('loaded', function () {
 				} else {
 					/*Contents to be send*/
 					let content_info = `
-					<details>
+					<details id="${message_out.t}">
 						<summary class="summary_title">${message_out.t}: ${time_get('full')}</summary>
 						<div class ="details_text">
 							<hr>

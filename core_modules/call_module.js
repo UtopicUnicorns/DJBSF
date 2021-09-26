@@ -3,13 +3,15 @@ exports.summon_modules = async function () {
 
 	ws = await require('./flatline_modules/ws'); //Web socket stuff
 
-	configuration_data = await require('./configs.json');
+	configuration_data = await require('./configs.json'); //Load config file
 
 	token = await configuration_data.bot_token; //Bot token
 
 	application_id = configuration_data.application_id; //Application ID
 
 	ws_key = configuration_data.ws_key; //Websocket key
+
+	intents_num = configuration_data.intents_num; //intents number
 
 	heart_beat = await require('./flatline_modules/heart_beat'); //Module to initiate and continue a link
 

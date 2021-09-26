@@ -11,11 +11,7 @@ async function start() {
 
 		//When we get data we have to catch it, which happens here
 		mail_man.on('view_slash', async (dat) => {
-			if (!dat) return;
-
-			if (dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\nCommand Guild: ${dat.guild_id}\n\n`);
-
-			if (!dat.guild_id) console.log(`Command name: ${dat.name}\nCommand ID: ${dat.id}\nApplication ID: ${dat.application_id}\nCommand Type: ${dat.type}\n\n`);
+			//console.log(dat);
 		});
 
 		/*When a user triggers an user application command(rightclick a user) then we catch it here*/
@@ -41,14 +37,13 @@ async function start() {
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
 		mail_man.once('ready', async (dat) => {
-			view_slash.v_s(im);
-
-			dat.guilds.forEach((g) => {
-				view_slash_guild.v_s_g(g.id, im);
-			});
+			console.log(`${time_stamp.tell('full')}\nBot started!\n\n`);
 		});
 	} catch (error) {
-		console.log('');
+		if (!error.toString().includes("./configs.json'")) {
+			console.log(error);
+			process.exit(0);
+		}
 	}
 }
 
@@ -69,24 +64,36 @@ async function check_config() {
 			output: process.stdout,
 		});
 
-		rl.question('Hello!\nIt seems that this is your first time using this bot.\n\nWhat is your Discord userID? ', function (user_id) {
-			rl.question('What is your bot token? ', function (bot_token) {
-				rl.question('What is your bot applicationID? ', function (application_id) {
-					rl.question('Please set a secret key for yourself for the websocket.', function (ws_key) {
-						console.log(`I am going to write the config file for you.`);
+		const rl_Q = [
+			'Hello!\nIt seems that this is your first time using this bot.\n\nWhat is your Discord userID?\n',
+			'What is your bot token?\n',
+			'What is your bot applicationID?\n',
+			'Please set a secret key for yourself for the websocket.\n',
+			'Specify your discord gateway intents integer!\nhttps://discord-intents-calculator.vercel.app\nhttps://discord.com/developers/docs/topics/gateway#gateway-intents\n',
+			'I am going to write the config file for you.',
+			'Your config file has been made, you can restart me now.',
+		];
 
-						const collected_config = JSON.stringify({ user_id: `${user_id}`, bot_token: `${bot_token}`, application_id: `${application_id}`, ws_key: `${ws_key}` });
+		rl.question(rl_Q[0], function (user_id) {
+			rl.question(rl_Q[1], function (bot_token) {
+				rl.question(rl_Q[2], function (application_id) {
+					rl.question(rl_Q[3], function (ws_key) {
+						rl.question(rl_Q[4], function (intents_num) {
+							console.log(rl_Q[5]);
 
-						fs.writeFileSync('./core_modules/configs.json', collected_config);
+							const collected_config = JSON.stringify({ user_id: `${user_id}`, bot_token: `${bot_token}`, application_id: `${application_id}`, ws_key: `${ws_key}`, intents_num: `${intents_num}` });
 
-						rl.close();
+							fs.writeFileSync('./core_modules/configs.json', collected_config);
+
+							rl.close();
+						});
 					});
 				});
 			});
 		});
 
 		rl.on('close', function () {
-			console.log('Your config file has been made, you can restart me now.');
+			console.log(rl_Q[6]);
 
 			process.exit(0);
 		});

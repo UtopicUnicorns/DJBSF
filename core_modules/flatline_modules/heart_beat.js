@@ -73,7 +73,7 @@ module.exports = {
 					op: 2, //OP 2 code wants us to send relevant data
 					d: {
 						token: `${token}`, //Bot token
-						intents: 32767, //Basically what we want to receive, this is no guarantee to get it if the intents are not met
+						intents: intents_num, //Basically what we want to receive, this is no guarantee to get it if the intents are not met
 						properties: {
 							$os: 'linux', //Identifying what OS we use
 							$browser: 'null', //For some reason they need to know our browser?
