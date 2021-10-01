@@ -128,11 +128,11 @@ module.exports = {
 			raw_cache.push(rec_data);
 
 			if (rec_data.t === 'INTERACTION_CREATE') {
-				if (rec_data.d.type === 1) mail_man.emit('interaction_create_slash', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
+				if (rec_data.d.type === 1) mail_man.emit('type_1_interaction', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 
-				if (rec_data.d.type === 2) mail_man.emit('interaction_create_user', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
+				if (rec_data.d.type === 2) mail_man.emit('type_2_interaction', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 
-				if (rec_data.d.type === 3) mail_man.emit('interaction_create_message', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
+				if (rec_data.d.type === 3) mail_man.emit('type_3_interaction', client_user.d, rec_data.d); //Give mail_man the data to shoot out an event
 			}
 
 			if (rec_data.t === 'READY') mail_man.emit('ready', rec_data.d); //Give mail_man the data to shoot out an event

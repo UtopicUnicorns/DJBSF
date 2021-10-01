@@ -11,26 +11,26 @@ async function start() {
 
 		//When we get data we have to catch it, which happens here
 		mail_man.on('view_slash', async (dat) => {
-			//console.log(dat);
+			console.log(dat);
 		});
 
-		/*When a user triggers an user application command(rightclick a user) then we catch it here*/
-		mail_man.on('interaction_create_user', async (client, dat) => {
-			//console.log(client, dat);
+		/*When a type 1 interaction is triggered*/
+		mail_man.on('type_1_interaction', async (client, dat) => {
+			console.log(client, dat);
 
 			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
 
-		/*When a user triggers a message application command(rightclick a message) it will be caught here*/
-		mail_man.on('interaction_create_message', async (client, dat) => {
-			//console.log(client, dat);
+		/*When a type 2 interaction is triggered*/
+		mail_man.on('type_2_interaction', async (client, dat) => {
+			console.log(client, dat);
 
 			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
 
-		/*When a user triggers a slash command(beging with /) we catch it here*/
-		mail_man.on('interaction_create_slash', async (client, dat) => {
-			//console.log(client, dat);
+		/*When a type 3 interaction is triggered*/
+		mail_man.on('type_3_interaction', async (client, dat) => {
+			console.log(client, dat);
 
 			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
 		});
