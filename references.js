@@ -33,19 +33,17 @@ let report_message = JSON.stringify({ name: 'Report this message', type: 3 }); /
 
 let delete_message = JSON.stringify({ name: 'Delete this message', type: 3 }); //message command
 
-register_slash(json3);
+register_slash.global(JSON);
 
-register_slash_guild.r_s_g(json2, '660988248788697100'); //prefer guild over global due hour wait
+register_slash.guild(JSON, GUILD_ID);
 
-view_slash.v_s();
+view_slash.global();
 
-delete_slash('883061058225463307'); //slash ID
+view_slash.guild(GUILD_ID);
 
-delete_slash('883058222565580890');
+delete_slash.global(COMMAND_ID);
 
-delete_slash('883057862065127494');
-
-delete_slash('883052308089413653');
+delete_slash.guild(COMMAND_ID, GUILD_ID);
 
 send_message.send(MESSAGE, CHANNEL_ID, im); //Example message send (MESSAGE, CHANNEL_ID, im)
 

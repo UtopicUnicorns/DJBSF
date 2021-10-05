@@ -1,15 +1,24 @@
 module.exports = {
-	rec_s: async function (interaction_id, interaction_token, im) {
+	do: async function (interaction_id, interaction_token, response_id, im) {
+		console.log(response_id);
 		//Response for interaction
-		let json = JSON.stringify({
-			type: 4,
-			data: {
-				tts: false,
-				content: 'Congrats on sending your command!',
-				embeds: [],
-				allowed_mentions: { parse: [] },
-			},
-		});
+		if (response_id === 6) {
+			var json = JSON.stringify({
+				type: 6,
+			});
+		}
+
+		if (response_id === 4) {
+			var json = JSON.stringify({
+				type: 4,
+				data: {
+					tts: false,
+					content: 'Congrats on sending your command!',
+					embeds: [],
+					allowed_mentions: { parse: [] },
+				},
+			});
+		}
 
 		const options = {
 			hostname: 'discord.com', //Just discord.com

@@ -19,17 +19,11 @@ exports.summon_modules = async function () {
 
 	time_stamp = await require('./extra_modules/time_stamp'); //Just a small thing for the time
 
-	register_slash_guild = await require('./slash_modules/register_slash_guild'); //Slash event register slash guild
-
 	delete_slash = await require('./slash_modules/delete_slash'); //Slash event delete global slash
 
 	register_slash = await require('./slash_modules/register_slash'); //Slash event register global slash
 
-	delete_slash_guild = await require('./slash_modules/delete_slash_guild'); //Slash event delete slash guild
-
 	view_slash = await require('./slash_modules/view_slash'); //Slash event call global slash commands
-
-	view_slash_guild = await require('./slash_modules/view_slash_guild'); //Slash event call guild slash commands
 
 	receive_slash = await require('./slash_modules/receive_slash'); //Slash event call slash commands
 

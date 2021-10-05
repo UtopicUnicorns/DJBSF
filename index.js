@@ -11,28 +11,34 @@ async function start() {
 
 		//When we get data we have to catch it, which happens here
 		mail_man.on('view_slash', async (dat) => {
+			if (!dat) return;
+
 			console.log(dat);
 		});
 
 		/*When a type 1 interaction is triggered*/
 		mail_man.on('type_1_interaction', async (client, dat) => {
-			console.log(client, dat);
+			if (!dat) return;
 
-			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
+			receive_slash.do(dat.id, dat.token, 1, im); //resolve command
 		});
 
 		/*When a type 2 interaction is triggered*/
 		mail_man.on('type_2_interaction', async (client, dat) => {
-			console.log(client, dat);
+			if (!dat) return;
 
-			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
+			if (dat.data && dat.data.name == 'commands') {
+				view_slash.global();
+			}
+
+			receive_slash.do(dat.id, dat.token, 4, im); //resolve command
 		});
 
 		/*When a type 3 interaction is triggered*/
 		mail_man.on('type_3_interaction', async (client, dat) => {
-			console.log(client, dat);
+			if (!dat) return;
 
-			receive_slash.rec_s(dat.id, dat.token, im); //resolve command
+			receive_slash.do(dat.id, dat.token, 1, im); //resolve command
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
