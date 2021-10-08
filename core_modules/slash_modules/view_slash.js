@@ -29,7 +29,7 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log('Error occured!');
+			console.log(time_stamp.tell('full'), error);
 		});
 
 		req.end();
@@ -64,7 +64,7 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log('Error occured!');
+			console.log(time_stamp.tell('full'), error);
 		});
 
 		req.end();
