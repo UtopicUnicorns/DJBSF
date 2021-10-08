@@ -16,14 +16,12 @@ module.exports = {
 			//We get some info in return
 			res.on('data', (d) => {
 				const recData = JSON.parse(d); //we parse the received data to JSON
-				console.log(recData);
-				//
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log('Error occured!');
+			console.log(time_stamp.tell('full'), error);
 		});
 
 		req.end();
@@ -44,13 +42,13 @@ module.exports = {
 		const req = https.request(options, (res) => {
 			//We get some info in return
 			res.on('data', (d) => {
-				//
+				const recData = JSON.parse(d); //we parse the received data to JSON
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log('Error occured!');
+			console.log(time_stamp.tell('full'), error);
 		});
 
 		req.end();

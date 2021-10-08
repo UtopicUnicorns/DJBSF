@@ -60,7 +60,7 @@ If all goes alright, then it will create the file for you.*/
 async function check_config() {
 	try {
 		data_checker = await require('./core_modules/configs.json');
-	} catch {
+	} catch (error) {
 		const fs = require('fs');
 
 		const readline = require('readline');
