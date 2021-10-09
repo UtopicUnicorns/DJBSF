@@ -19,6 +19,11 @@ let get_commands = JSON.stringify({
 	options: [],
 }); //slash command
 
+//type: 7, // 7 is type CHANNEL
+//type: 6, // 6 is type USER
+//type: 1, // 1 is type SUB_COMMAND
+//type: 2, // 2 is type SUB_COMMAND_GROUP
+
 let report_avatar = JSON.stringify({ name: 'Report avatar', type: 2 }); //user command
 
 let report_nickname = JSON.stringify({ name: 'Report nickname', type: 2 }); //user command

@@ -28,7 +28,9 @@ async function start() {
 			if (!dat) return;
 
 			if (dat.data && dat.data.name == 'commands') {
-				view_slash.global();
+				console.log(dat.data.options[0].value);
+				//view_slash.global();
+				//view_slash.guild(dat.guild_id);
 			}
 
 			receive_slash.do(dat.id, dat.token, 4, im); //resolve command
@@ -43,6 +45,41 @@ async function start() {
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
 		mail_man.once('ready', async (dat) => {
+			let json2 = await JSON.stringify({
+				name: 'blep',
+				type: 1,
+				description: 'Send a random adorable animal photo',
+				options: [
+					{
+						name: 'animal',
+						description: 'The type of animal',
+						type: 3,
+						required: true,
+						choices: [
+							{
+								name: 'Dog',
+								value: 'animal_dog',
+							},
+							{
+								name: 'Cat',
+								value: 'animal_cat',
+							},
+							{
+								name: 'Penguin',
+								value: 'animal_penguin',
+							},
+						],
+					},
+					{
+						name: 'only_smol',
+						description: 'Whether to show only baby animals',
+						type: 5,
+						required: false,
+					},
+				],
+			}); //slash command
+
+			await register_slash.guild(json2, '628978428019736619');
 			console.log(`${time_stamp.tell('full')}\nBot started!\n\n`);
 		});
 	} catch (error) {

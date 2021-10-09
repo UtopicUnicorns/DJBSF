@@ -1,5 +1,0 @@
-{
-	"name": "master_connect",
-	"main": "index.js",
-	"chromium-args": "--enable-logging=stderr"
-}
