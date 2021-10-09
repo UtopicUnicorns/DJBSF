@@ -1,10 +1,34 @@
 //Slash command
-let json1 = JSON.stringify({
-	type: 1,
-	name: 'permissions',
-	description: 'Get or edit permissions for a user or a role',
-	default_permission: true,
-	options: [],
+let json1 = await JSON.stringify({
+	name: 'commands',
+	description: 'View, add or delete commands',
+	options: [
+		{
+			name: 'view',
+			description: 'View commands',
+			type: 3,
+			choices: [
+				{
+					name: 'Global commands',
+					value: 'global_commands',
+				},
+				{
+					name: 'Guild commands',
+					value: 'guild_commands',
+				},
+			],
+		},
+		{
+			name: 'add',
+			description: 'Add commands',
+			type: 3,
+		},
+		{
+			name: 'delete',
+			description: 'Delete commands',
+			type: 3,
+		},
+	],
 }); //slash command
 
 let json2 = JSON.stringify({ name: 'High Five', type: 2 }); //user command
@@ -19,10 +43,12 @@ let get_commands = JSON.stringify({
 	options: [],
 }); //slash command
 
-//type: 7, // 7 is type CHANNEL
-//type: 6, // 6 is type USER
 //type: 1, // 1 is type SUB_COMMAND
 //type: 2, // 2 is type SUB_COMMAND_GROUP
+//type: 3, // 3 is type FREE_VALUE
+//type: 6, // 6 is type USER
+//type: 7, // 7 is type CHANNEL
+//type: 8, // 8 is type ROLE
 
 let report_avatar = JSON.stringify({ name: 'Report avatar', type: 2 }); //user command
 

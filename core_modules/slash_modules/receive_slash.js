@@ -1,10 +1,9 @@
 module.exports = {
 	do: async function (interaction_id, interaction_token, response_id, im) {
-		console.log(response_id);
 		//Response for interaction
-		if (response_id === 6) {
+		if (response_id === 1) {
 			var json = JSON.stringify({
-				type: 6,
+				type: 1,
 			});
 		}
 
