@@ -9,18 +9,26 @@ async function start() {
 
 		heart_beat.rhythm(im); //start the process
 
-		//When we get data we have to catch it, which happens here
+		/*When requested, commands get output trough here*/
 		mail_man.on('view_slash', async (dat) => {
-			if (!dat) return;
+			try {
+				if (!dat) return;
 
-			console.log(dat);
+				console.log(dat);
+			} catch (error) {
+				console.log(time_stamp.tell('full'), error.stack);
+			}
 		});
 
 		/*When a type 1 interaction is triggered*/
 		mail_man.on('type_1_interaction', async (client, dat) => {
-			if (!dat) return;
+			try {
+				if (!dat) return;
 
-			receive_slash.do(dat.id, dat.token, 1, im); //resolve command
+				receive_slash.do({ id: dat.id, token: dat.token, type: 4 }); //resolve command
+			} catch (error) {
+				console.log(time_stamp.tell('full'), error.stack);
+			}
 		});
 
 		/*When a type 2 interaction is triggered*/
@@ -34,6 +42,8 @@ async function start() {
 							if (dat.data.options[0].value == 'global_commands') view_slash.global();
 
 							if (dat.data.options[0].value == 'guild_commands') view_slash.guild(dat.guild_id);
+
+							send_message.send({ msg: 'test' }, dat);
 							break;
 
 						case 'add':
@@ -45,9 +55,9 @@ async function start() {
 					}
 				}
 
-				receive_slash.do(dat.id, dat.token, 4, im); //resolve command
+				receive_slash.do({ content: 'Just checking!', id: dat.id, token: dat.token, type: 4 }); //resolve command
 			} catch (error) {
-				console.log(error);
+				console.log(time_stamp.tell('full'), error.stack);
 			}
 		});
 
@@ -55,7 +65,7 @@ async function start() {
 		mail_man.on('type_3_interaction', async (client, dat) => {
 			if (!dat) return;
 
-			receive_slash.do(dat.id, dat.token, 1, im); //resolve command
+			receive_slash.do({ id: dat.id, token: dat.token, type: 1 }); //resolve command
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
@@ -80,25 +90,61 @@ async function start() {
 						],
 					},
 					{
-						name: 'add',
-						description: 'Add commands',
+						name: 'enable',
+						description: 'Enable commands',
 						type: 3,
+						choices: [
+							{
+								name: 'Administrative commands',
+								value: 'administrative_commands',
+							},
+							{
+								name: 'Music commands',
+								value: 'music_commands',
+							},
+							{
+								name: 'Support commands',
+								value: 'support_commands',
+							},
+							{
+								name: 'General commands',
+								value: 'general_commands',
+							},
+						],
 					},
 					{
-						name: 'delete',
-						description: 'Delete commands',
+						name: 'disable',
+						description: 'Disable commands',
 						type: 3,
+						choices: [
+							{
+								name: 'Administrative commands',
+								value: 'administrative_commands',
+							},
+							{
+								name: 'Music commands',
+								value: 'music_commands',
+							},
+							{
+								name: 'Support commands',
+								value: 'support_commands',
+							},
+							{
+								name: 'General commands',
+								value: 'general_commands',
+							},
+						],
 					},
 				],
 			}); //slash command
 
-			await register_slash.guild(commands, '628978428019736619');
+			//await register_slash.global(commands);
 
-			console.log(`${time_stamp.tell('full')}\nBot started!\n\n`);
+			console.log(time_stamp.tell('full'), `\nBot started!\n\n`);
 		});
 	} catch (error) {
 		if (!error.toString().includes("./configs.json'")) {
-			console.log(error);
+			console.log(error.stack);
 			process.exit(0);
 		}
 	}

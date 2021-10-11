@@ -1,5 +1,5 @@
 module.exports = {
-	global: async function (json, im) {
+	global: async function (json) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
@@ -21,14 +21,14 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error);
+			console.log(time_stamp.tell('full'), error.stack);
 		});
 
 		req.write(json);
 
 		req.end();
 	},
-	guild: async function (json, guild_id, im) {
+	guild: async function (json, guild_id) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
@@ -50,7 +50,7 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error);
+			console.log(time_stamp.tell('full'), error.stack);
 		});
 
 		req.write(json);

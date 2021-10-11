@@ -141,6 +141,8 @@ module.exports = {
 
 			if (rec_data.op === 10) pulse(1, rec_data); //op 10 code needs the first shock
 
+			if (rec_data.op === 7) console.log(rec_data);
+
 			if (rec_data.t === 'READY') pulse(3, rec_data); //READY needs the third shock
 		});
 

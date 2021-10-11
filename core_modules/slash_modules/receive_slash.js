@@ -1,28 +1,20 @@
 module.exports = {
-	do: async function (interaction_id, interaction_token, response_id, im) {
+	do: async function (interaction) {
 		//Response for interaction
-		if (response_id === 1) {
-			var json = JSON.stringify({
-				type: 1,
-			});
-		}
-
-		if (response_id === 4) {
-			var json = JSON.stringify({
-				type: 4,
-				data: {
-					tts: false,
-					content: 'Congrats on sending your command!',
-					embeds: [],
-					allowed_mentions: { parse: [] },
-				},
-			});
-		}
+		var json = JSON.stringify({
+			type: interaction.type,
+			data: {
+				tts: false,
+				content: interaction.content || 'Slash',
+				embeds: [],
+				allowed_mentions: { parse: [] },
+			},
+		});
 
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
-			path: `/api/interactions/${interaction_id}/${interaction_token}/callback`, //To messages endpoint with variable channel_id
+			path: `/api/interactions/${interaction.id}/${interaction.token}/callback`, //To messages endpoint with variable channel_id
 			method: 'POST', //We send something
 			headers: {
 				'Content-Type': 'application/json', //We notify that we use JSON
@@ -40,7 +32,7 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error);
+			console.log(time_stamp.tell('full'), error.stack);
 		});
 
 		req.write(json);

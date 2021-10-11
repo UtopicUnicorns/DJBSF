@@ -1,5 +1,5 @@
 module.exports = {
-	global: async function (im) {
+	global: async function () {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
@@ -20,21 +20,25 @@ module.exports = {
 				fetch_data.push(d);
 			});
 
-			res.on('end', () => {
-				let call_to = JSON.parse(fetch_data);
+			res.on('end', async () => {
+				try {
+					let call_to = JSON.parse(fetch_data);
 
-				mail_man.emit('view_slash', call_to[0]); //Give mail_man the data to shoot out an event
+					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+				} catch (error) {
+					console.log(time_stamp.tell('full'), error.stack);
+				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error);
+			console.log(time_stamp.tell('full'), error.stack);
 		});
 
 		req.end();
 	},
-	guild: async function (guild_id, im) {
+	guild: async function (guild_id) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
@@ -55,16 +59,20 @@ module.exports = {
 				fetch_data.push(d);
 			});
 
-			res.on('end', () => {
-				let call_to = JSON.parse(fetch_data);
+			res.on('end', async () => {
+				try {
+					let call_to = JSON.parse(fetch_data);
 
-				mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+				} catch (error) {
+					console.log(time_stamp.tell('full'), error.stack);
+				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error);
+			console.log(time_stamp.tell('full'), error.stack);
 		});
 
 		req.end();
