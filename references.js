@@ -1,15 +1,15 @@
 /*Sending a message*/
-send_message.send({ msg: CONTENT}); //Required
-send_message.send({ msg: CONTENT, chan: CHANNEL_ID}); //optionals
+send_message.send({ msg: CONTENT }); //Required
+send_message.send({ msg: CONTENT, chan: CHANNEL_ID }); //optionals
 
-let json1 = await JSON.stringify({
+let commands = await JSON.stringify({
 	name: 'commands',
 	description: 'View, add or delete commands',
 	options: [
 		{
 			name: 'view',
 			description: 'View commands',
-			type: 3, //Free input, but choices instead
+			type: 3,
 			choices: [
 				{
 					name: 'Global commands',
@@ -22,14 +22,50 @@ let json1 = await JSON.stringify({
 			],
 		},
 		{
-			name: 'add',
-			description: 'Add commands',
-			type: 3, //Free input
+			name: 'enable',
+			description: 'Enable commands',
+			type: 3,
+			choices: [
+				{
+					name: 'Administrative commands',
+					value: 'administrative_commands',
+				},
+				{
+					name: 'Music commands',
+					value: 'music_commands',
+				},
+				{
+					name: 'Support commands',
+					value: 'support_commands',
+				},
+				{
+					name: 'General commands',
+					value: 'general_commands',
+				},
+			],
 		},
 		{
-			name: 'delete',
-			description: 'Delete commands',
-			type: 3, //Free input
+			name: 'disable',
+			description: 'Disable commands',
+			type: 3,
+			choices: [
+				{
+					name: 'Administrative commands',
+					value: 'administrative_commands',
+				},
+				{
+					name: 'Music commands',
+					value: 'music_commands',
+				},
+				{
+					name: 'Support commands',
+					value: 'support_commands',
+				},
+				{
+					name: 'General commands',
+					value: 'general_commands',
+				},
+			],
 		},
 	],
 }); //slash command
@@ -68,6 +104,7 @@ NUMBER	10	Any double between -2^53 and 2^53*/
 10	Hello	Receive	Sent immediately after connecting, contains the heartbeat_interval to use.
 11	Heartbeat ACK	Receive	Sent in response to receiving a heartbeat to acknowledge that it has been received.
 */
+discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
 
 register_slash.global(JSON);
 

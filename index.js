@@ -23,8 +23,6 @@ async function start() {
 		/*When a type 1 interaction is triggered*/
 		mail_man.on('type_1_interaction', async (client, dat) => {
 			try {
-				if (!dat) return;
-
 				receive_slash.do({ id: dat.id, token: dat.token, type: 4 }); //resolve command
 			} catch (error) {
 				console.log(time_stamp.tell('full'), error.stack);
@@ -34,8 +32,6 @@ async function start() {
 		/*When a type 2 interaction is triggered*/
 		mail_man.on('type_2_interaction', async (client, dat) => {
 			try {
-				if (!dat) return;
-
 				if (dat.data && dat.data.name == 'commands') {
 					switch (dat.data.options[0].name) {
 						case 'view':
@@ -63,88 +59,25 @@ async function start() {
 
 		/*When a type 3 interaction is triggered*/
 		mail_man.on('type_3_interaction', async (client, dat) => {
-			if (!dat) return;
-
-			receive_slash.do({ id: dat.id, token: dat.token, type: 1 }); //resolve command
+			try {
+				receive_slash.do({ id: dat.id, token: dat.token, type: 4 }); //resolve command
+			} catch (error) {
+				console.log(time_stamp.tell('full'), error.stack);
+			}
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
-		mail_man.once('ready', async (dat) => {
-			let commands = await JSON.stringify({
-				name: 'commands',
-				description: 'View, add or delete commands',
-				options: [
-					{
-						name: 'view',
-						description: 'View commands',
-						type: 3,
-						choices: [
-							{
-								name: 'Global commands',
-								value: 'global_commands',
-							},
-							{
-								name: 'Guild commands',
-								value: 'guild_commands',
-							},
-						],
-					},
-					{
-						name: 'enable',
-						description: 'Enable commands',
-						type: 3,
-						choices: [
-							{
-								name: 'Administrative commands',
-								value: 'administrative_commands',
-							},
-							{
-								name: 'Music commands',
-								value: 'music_commands',
-							},
-							{
-								name: 'Support commands',
-								value: 'support_commands',
-							},
-							{
-								name: 'General commands',
-								value: 'general_commands',
-							},
-						],
-					},
-					{
-						name: 'disable',
-						description: 'Disable commands',
-						type: 3,
-						choices: [
-							{
-								name: 'Administrative commands',
-								value: 'administrative_commands',
-							},
-							{
-								name: 'Music commands',
-								value: 'music_commands',
-							},
-							{
-								name: 'Support commands',
-								value: 'support_commands',
-							},
-							{
-								name: 'General commands',
-								value: 'general_commands',
-							},
-						],
-					},
-				],
-			}); //slash command
-
-			//await register_slash.global(commands);
-
-			console.log(time_stamp.tell('full'), `\nBot started!\n\n`);
+		mail_man.once('ready', async (client, dat) => {
+			try {
+				console.log(time_stamp.tell('full'), `\nBot started!\n\n`);
+			} catch (error) {
+				console.log(time_stamp.tell('full'), error.stack);
+			}
 		});
 	} catch (error) {
 		if (!error.toString().includes("./configs.json'")) {
-			console.log(error.stack);
+			console.log(error);
+
 			process.exit(0);
 		}
 	}
