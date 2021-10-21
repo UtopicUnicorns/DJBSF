@@ -2,6 +2,8 @@ module.exports = {
 	rhythm: async function () {
 		/*Collection of info*/
 		let discord_intel = {
+			dead: true, //Connection dead or alive?
+
 			client: null, //Client cache
 
 			guilds: [], //Client guilds
@@ -9,8 +11,6 @@ module.exports = {
 			users: [], //Client users
 
 			beat_interval: null, //API given interval
-
-			flatline: null, //Check if connection is dead
 
 			beating_heart: null, //How many heartbeats are send
 
@@ -26,8 +26,6 @@ module.exports = {
 			async function pulse(shock, data) {
 				switch (shock) {
 					case 1: //First pulse, we shoot a hello trough the gateway
-						discord_intel.flatline = false; //We save that we are not dead anymore
-
 						shock_1 = {
 							op: 1, //OP 1 code is for the heartbeat
 
@@ -36,7 +34,7 @@ module.exports = {
 
 						socket.send(JSON.stringify(shock_1)); //Send the first shock for info
 
-						discord_intel.beat_interval = data.d.heartbeat_interval; //We have our heartbeat interval so we store it
+						discord_intel.beat_interval = data; //We have our heartbeat interval so we store it
 
 						heartbeat(); //We initiate the regular heartbeat
 
@@ -80,7 +78,7 @@ module.exports = {
 						break;
 
 					case 3: //Third pulse, we gather relevant data to use
-						client_user = data; //We define the client_user after receiving the data
+						discord_intel.client = data; //We define the client_user after receiving the data
 
 						discord_intel.seq_num = data.s; //With our fresh sequence number we save it for use
 
@@ -92,11 +90,7 @@ module.exports = {
 
 			/*Basically the heart, we try to keep the connection alive by sending variable pulses*/
 			function heartbeat() {
-				let regular_beat = Math.floor(discord_intel.beat_interval * Math.random()); //Randomize the heartbeat interval received by the API
-
 				setInterval(function () {
-					//console.log(discord_intel.guilds);
-
 					discord_intel.beating_heart++; //We count up the amount of beats
 
 					send_beat = {
@@ -106,18 +100,14 @@ module.exports = {
 					};
 
 					socket.send(JSON.stringify(send_beat)); //send out the beat
-				}, regular_beat); //Randomized interval
+				}, discord_intel.beat_interval); //Randomized interval
 			}
 
 			/*Messages received trough socket end in here*/
 			socket.on('message', function incoming(message) {
-				//discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
-
 				const rec_data = JSON.parse(message); //Convert message to JSON
 
-				if (rec_data.s && rec_data.s !== null) discord_intel.seq_num = rec_data.s;
-
-				mail_man.emit('raw', discord_intel, rec_data); //Send out a raw event
+				if (rec_data.s && rec_data.s !== null) discord_intel.seq_num = rec_data.s; //Record sequence number
 
 				if (rec_data.t) var event_name = rec_data.t;
 				else var event_name = 'NONE'; //Short hand raw event name
@@ -128,48 +118,23 @@ module.exports = {
 				if (rec_data.op) var event_code = rec_data.op;
 				else var event_code = 'NONE'; //Short hand OP code
 
-				switch (event_name) {
-					case 'INTERACTION_CREATE': //When event name is INTERACTION_CREATE
-						switch (event_type) {
-							case 1: //If type is 1
-								mail_man.emit('type_1_interaction', discord_intel, rec_data.d); //Send data to emitter
+				mail_man.emit(event_name, discord_intel, rec_data); //Send data to emitter
 
-								break;
+				/*If event name is ready we shoot info into our cache and start the heartbeat*/
+				if (event_name == 'READY') {
+					discord_intel.client = rec_data.d; //Pushing client
 
-							case 2: //If type is 2
-								mail_man.emit('type_2_interaction', discord_intel, rec_data.d); //Send data to emitter
-
-								break;
-
-							case 3: //If type is 3
-								mail_man.emit('type_3_interaction', discord_intel, rec_data.d); //Send data to emitter
-
-								break;
-						}
-
-						break;
-
-					case 'READY': //When event name is READY
-						discord_intel.client = rec_data.d; //Pushing client
-
-						pulse(3, rec_data); //READY needs the third shock
-
-						mail_man.emit('ready', discord_intel, rec_data.d); //Give mail_man the data to shoot out an event
-
-						break;
-
-					case 'GUILD_CREATE': //When event name is GUILD_CREATE
-						discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d }); //Push new guild into discord_intel.guilds
-
-						//parse_guilds = JSON.parse(discord_intel.guilds.slice(1, 1));
-						//console.log(parse_guilds['660988248788697100']);
-
-						mail_man.emit('guild_create', discord_intel, rec_data.d); //Give mail_man the data to shoot out an event
-
-						break;
+					pulse(3, rec_data); //READY needs the third shock
 				}
 
-				if (event_code === 10) {
+				/*We cache guild introductions*/
+				if (event_type == 'GUILD_CREATE') discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
+				//discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
+				//parse_guilds = JSON.parse(discord_intel.guilds.slice(1, 1));
+				//console.log(parse_guilds['660988248788697100']);
+
+				/*When code is 10 Discord send a hello*/
+				if (event_code === 10 && discord_intel.dead == true) {
 					if (discord_intel.ses_num && discord_intel.seq_num) {
 						resume = {
 							op: 6, //OP code 6 RESUME
@@ -185,23 +150,25 @@ module.exports = {
 
 						socket.send(JSON.stringify(resume)); //Send message to the gateway to resume a session
 
-						console.log(time_stamp.tell('full'), 'I tried to resume');
-
-						mail_man.emit('resume', discord_intel); //Give mail_man the data to shoot out an event
+						discord_intel.dead = false;
 					} else {
-						pulse(1, rec_data); //op 10 code needs the first shock
+						if (rec_data.d) {
+							pulse(1, rec_data.d.heartbeat_interval); //op 10 code needs the first shock
+
+							discord_intel.dead = false;
+						}
 					}
 				}
 			});
 
 			/*If an error occurs we handle it here*/
-			socket.on('error', (error) => {
-				console.log(time_stamp.tell('full'), error); //Display error
-			});
+			socket.on('error', (error) => console.log(time_stamp.tell('full'), error));
 
 			/*When the connection gets broken we handle it here*/
-			socket.on('close', async function close() {
-				socket = null;
+			socket.on('close', (code) => {
+				discord_intel.dead = true;
+
+				console.log(time_stamp.tell('full'), `Closed with code: ${code}`);
 
 				setTimeout(startWebsocket, 5000);
 			});
