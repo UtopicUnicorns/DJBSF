@@ -26,14 +26,14 @@ module.exports = {
 
 					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
 				} catch (error) {
-					console.log(time_stamp.tell('full'), error.stack);
+					console.log(action.tell_time('full'), error);
 				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error.stack);
+			console.log(action.tell_time('full'), error);
 		});
 
 		req.end();
@@ -65,14 +65,14 @@ module.exports = {
 
 					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
 				} catch (error) {
-					console.log(time_stamp.tell('full'), error.stack);
+					console.log(action.tell_time('full'), error);
 				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error.stack);
+			console.log(action.tell_time('full'), error);
 		});
 
 		req.end();

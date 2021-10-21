@@ -1,10 +1,10 @@
 module.exports = {
-	global: async function (json) {
+	global: async function (command_id) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
-			path: `/api/applications/${application_id}/commands`, //To messages endpoint with variable channel_id
-			method: 'POST', //We send something
+			path: `/api/applications/${application_id}/commands/${command_id}`, //To messages endpoint with variable channel_id
+			method: 'DELETE', //We delete something
 			headers: {
 				'Content-Type': 'application/json', //We notify that we use JSON
 				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
@@ -21,19 +21,17 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error.stack);
+			console.log(action.tell_time('full'), error);
 		});
-
-		req.write(json);
 
 		req.end();
 	},
-	guild: async function (json, guild_id) {
+	guild: async function (command_id, guild_id) {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
-			path: `/api/applications/${application_id}/guilds/${guild_id}/commands`, //To messages endpoint with variable channel_id
-			method: 'POST', //We send something
+			path: `/api/applications/${application_id}/guilds/${guild_id}/commands/${command_id}`, //To messages endpoint with variable channel_id
+			method: 'DELETE', //We delete something
 			headers: {
 				'Content-Type': 'application/json', //We notify that we use JSON
 				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
@@ -50,10 +48,8 @@ module.exports = {
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(time_stamp.tell('full'), error.stack);
+			console.log(action.tell_time('full'), error);
 		});
-
-		req.write(json);
 
 		req.end();
 	},

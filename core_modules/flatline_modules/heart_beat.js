@@ -54,21 +54,9 @@ module.exports = {
 								properties: {
 									$os: 'linux', //Identifying what OS we use
 
-									$browser: 'null', //For some reason they need to know our browser?
+									$browser: 'DJBSF 0.3', //For some reason they need to know our browser?
 
-									$device: 'PC', //And they also want to know how we use Discord
-								},
-
-								presence: {
-									activities: [
-										{
-											name: 'Testing!', //Bot status message
-
-											type: 0,
-										},
-									],
-
-									status: 'dnd', //Status presence: DND, AFK, Online, Offline
+									$device: 'DJBSF 0.3', //And they also want to know how we use Discord
 								},
 							},
 						};
@@ -118,7 +106,7 @@ module.exports = {
 				if (rec_data.op) var event_code = rec_data.op;
 				else var event_code = 'NONE'; //Short hand OP code
 
-				mail_man.emit(event_name, discord_intel, rec_data); //Send data to emitter
+				mail_man.emit(event_name, discord_intel, rec_data, socket); //Send data to emitter
 
 				/*If event name is ready we shoot info into our cache and start the heartbeat*/
 				if (event_name == 'READY') {

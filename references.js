@@ -1,6 +1,6 @@
 /*Sending a message*/
-send_message.send({ msg: CONTENT }); //Required
-send_message.send({ msg: CONTENT, chan: CHANNEL_ID }); //optionals
+send_message.send({ msg: CONTENT }, DATA); //Required
+send_message.send({ msg: CONTENT, chan: CHANNEL_ID }, DATA); //optionals
 
 let commands = await JSON.stringify({
 	name: 'commands',
@@ -90,6 +90,41 @@ CHANNEL	7	Includes all channel types + categories
 ROLE	8
 MENTIONABLE	9	Includes users and roles
 NUMBER	10	Any double between -2^53 and 2^53*/
+
+/*
+name	string	the activity's name
+type	integer	activity type
+url?	?string	stream url, is validated when type is 1
+created_at	integer	unix timestamp (in milliseconds) of when the activity was added to the user's session
+timestamps?	timestamps object	unix timestamps for start and/or end of the game
+application_id?	snowflake	application id for the game
+details?	?string	what the player is currently doing
+state?	?string	the user's current party status
+emoji?	?emoji object	the emoji used for a custom status
+party?	party object	information for the current party of the player
+assets?	assets object	images for the presence and their hover texts
+secrets?	secrets object	secrets for Rich Presence joining and spectating
+instance?	boolean	whether or not the activity is an instanced game session
+flags?	integer	activity flags ORd together, describes what the payload includes
+buttons?	array of buttons	the custom buttons shown in the Rich Presence (max 2)
+
+
+start?	integer	unix time (in milliseconds) of when the activity started
+end?	integer	unix time (in milliseconds) of when the activity ends
+
+name	string	the name of the emoji
+id?	snowflake	the id of the emoji
+animated?	boolean	whether this emoji is animated
+
+
+0	Game	Playing {name}	"Playing Rocket League"
+1	Streaming	Streaming {details}	"Streaming Rocket League"
+2	Listening	Listening to {name}	"Listening to Spotify"
+3	Watching	Watching {name}	"Watching YouTube Together"
+4	Custom	{emoji} {name}	":smiley: I am cool"
+5	Competing	Competing in {name}	"Competing in Arena World Champions"
+*/
+
 
 /*
 0	Dispatch	Receive	An event was dispatched.
