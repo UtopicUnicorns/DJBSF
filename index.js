@@ -9,31 +9,31 @@ async function start() {
 		heart_beat.rhythm(im); //start the process
 
 		/*When requested, commands get output trough here*/
-		mail_man.on('view_slash', async (dat) => {
+		mail_man.on('view_slash', async (client) => {
 			try {
-				if (!dat) return;
+				if (!client) return;
 
-				console.log(dat);
+				console.log(client);
 			} catch (error) {
 				console.log(action.tell_time('full'), error);
 			}
 		});
 
 		/*On any interaction this gets triggered*/
-		mail_man.on('INTERACTION_CREATE', async (client, dat) => {
+		mail_man.on('INTERACTION_CREATE', async (client) => {
 			try {
-				//console.log(dat);
-				action.send('test', dat);
-				action.receive_interaction({ content: 'Just checking!', id: dat.d.id, token: dat.d.token, type: 4 }); //resolve command
+				//console.log(client);
+				action.send('test', client);
+				action.receive_interaction({ content: 'Just checking!', id: client.message.d.id, token: client.message.d.token, type: 4 }); //resolve command
 			} catch (error) {
 				console.log(action.tell_time('full'), error);
 			}
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
-		mail_man.once('READY', async (client, dat, socket) => {
+		mail_man.once('READY', async (client) => {
 			try {
-				action.presence_update({}, socket);
+				action.presence_update({}, client);
 				console.log(action.tell_time('full'), `\nBot started!\n\n`);
 			} catch (error) {
 				console.log(action.tell_time('full'), error);

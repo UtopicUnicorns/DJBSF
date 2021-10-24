@@ -106,7 +106,7 @@ module.exports = {
 				if (rec_data.op) var event_code = rec_data.op;
 				else var event_code = 'NONE'; //Short hand OP code
 
-				mail_man.emit(event_name, discord_intel, rec_data, socket); //Send data to emitter
+				mail_man.emit(event_name, { client: discord_intel, message: rec_data, socket: socket }); //Send data to emitter
 
 				/*If event name is ready we shoot info into our cache and start the heartbeat*/
 				if (event_name == 'READY') {

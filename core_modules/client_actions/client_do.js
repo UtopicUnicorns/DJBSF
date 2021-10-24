@@ -1,6 +1,6 @@
 module.exports = {
 	/*SEND MESSAGE MODULE*/
-	send: async function (message, message_data) {
+	send: async function (message, client) {
 		const data = JSON.stringify({
 			content: `${message.msg || message}`,
 			components: [],
@@ -9,7 +9,7 @@ module.exports = {
 		const options = {
 			hostname: 'discord.com', //Just discord.com
 			port: 443, //Secure port 443 aka https
-			path: `/api/channels/${message.chan || message_data.d.channel_id}/messages`, //To messages endpoint with variable channel_id
+			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`, //To messages endpoint with variable channel_id
 			method: 'POST', //We send something
 			headers: {
 				'Content-Type': 'application/json', //We notify that we use JSON
@@ -105,7 +105,7 @@ module.exports = {
 	},
 
 	/*PRESENCE UPDATES*/
-	presence_update: async function (info, socket) {
+	presence_update: async function (info, client) {
 		presence_update = {
 			op: 3,
 			d: {
@@ -121,6 +121,6 @@ module.exports = {
 			},
 		};
 
-		socket.send(JSON.stringify(presence_update));
+		client.socket.send(JSON.stringify(presence_update));
 	},
 };
