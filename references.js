@@ -1,6 +1,21 @@
 /*Sending a message*/
-send_message.send({ msg: CONTENT }, DATA); //Required
-send_message.send({ msg: CONTENT, chan: CHANNEL_ID }, DATA); //optionals
+action.send({ msg: CONTENT }, client); //Required
+
+action.send({ msg: CONTENT, chan: CHANNEL_ID }, client); //optionals
+
+discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
+
+action.reg_slash(JSON);
+
+action.reg_slash_guild(JSON, GUILD_ID);
+
+action.view_slash();
+
+action.view_slash_guild(GUILD_ID);
+
+action.del_slash(COMMAND_ID);
+
+action.del_slash_guild(COMMAND_ID, GUILD_ID);
 
 let commands = await JSON.stringify({
 	name: 'commands',
@@ -125,7 +140,6 @@ animated?	boolean	whether this emoji is animated
 5	Competing	Competing in {name}	"Competing in Arena World Champions"
 */
 
-
 /*
 0	Dispatch	Receive	An event was dispatched.
 1	Heartbeat	Send/Receive	Fired periodically by the client to keep the connection alive.
@@ -139,16 +153,3 @@ animated?	boolean	whether this emoji is animated
 10	Hello	Receive	Sent immediately after connecting, contains the heartbeat_interval to use.
 11	Heartbeat ACK	Receive	Sent in response to receiving a heartbeat to acknowledge that it has been received.
 */
-discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
-
-register_slash.global(JSON);
-
-register_slash.guild(JSON, GUILD_ID);
-
-view_slash.global();
-
-view_slash.guild(GUILD_ID);
-
-delete_slash.global(COMMAND_ID);
-
-delete_slash.guild(COMMAND_ID, GUILD_ID);

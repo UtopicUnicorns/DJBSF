@@ -1,86 +1,4 @@
 module.exports = {
-	/*SEND MESSAGE MODULE*/
-	send: async function (message, client) {
-		const data = JSON.stringify({
-			content: `${message.msg || message}`,
-			components: [],
-		}); //Convert content to json
-
-		const options = {
-			hostname: 'discord.com', //Just discord.com
-			port: 443, //Secure port 443 aka https
-			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`, //To messages endpoint with variable channel_id
-			method: 'POST', //We send something
-			headers: {
-				'Content-Type': 'application/json', //We notify that we use JSON
-				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
-			},
-		};
-
-		//We use the https module to send
-		const req = https.request(options, (res) => {
-			//We get some info in return
-			res.on('data', async (d) => {
-				try {
-					const recData = JSON.parse(d); //we parse the received data to JSON
-				} catch (error) {
-					console.log(action.tell_time('full'), error);
-				}
-			});
-		});
-
-		//If an error occurs we handle it here
-		req.on('error', (error) => {
-			console.log(action.tell_time('full'), error);
-		});
-
-		req.write(data);
-
-		req.end();
-	},
-
-	/*HANDLE INTERACTION RECEIVE*/
-	receive_interaction: async function (interaction) {
-		//Response for interaction
-		var json = JSON.stringify({
-			type: interaction.type,
-			data: {
-				tts: false,
-				content: interaction.content || 'Slash',
-				embeds: [],
-				allowed_mentions: { parse: [] },
-			},
-		});
-
-		const options = {
-			hostname: 'discord.com', //Just discord.com
-			port: 443, //Secure port 443 aka https
-			path: `/api/interactions/${interaction.id}/${interaction.token}/callback`, //To messages endpoint with variable channel_id
-			method: 'POST', //We send something
-			headers: {
-				'Content-Type': 'application/json', //We notify that we use JSON
-				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
-			},
-		};
-
-		//We use the https module to send
-		const req = https.request(options, (res) => {
-			//We get some info in return
-			res.on('data', (d) => {
-				//const recData = JSON.parse(d); //we parse the received data to JSON
-			});
-		});
-
-		//If an error occurs we handle it here
-		req.on('error', (error) => {
-			console.log(action.tell_time('full'), error);
-		});
-
-		req.write(json);
-
-		req.end();
-	},
-
 	/*RETURN TIME*/
 	tell_time: function (ver) {
 		if (ver == 'full') {
@@ -104,6 +22,79 @@ module.exports = {
 		}
 	},
 
+	/*send out*/
+	out: async function (info) {
+		const options = {
+			hostname: 'discord.com', //Just discord.com
+			port: 443, //Secure port 443 aka https
+			path: info.path,
+			method: info.method,
+			headers: {
+				'Content-Type': 'application/json', //We notify that we use JSON
+				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
+			},
+		};
+
+		//We use the https module to send
+		const req = https.request(options, (res) => {
+			//We get some info in return
+			res.on('data', async (d) => {
+				try {
+					const recData = JSON.parse(d); //we parse the received data to JSON
+				} catch (error) {
+					console.log(action.tell_time('full'), error);
+				}
+			});
+		});
+
+		//If an error occurs we handle it here
+		req.on('error', (error) => {
+			console.log(action.tell_time('full'), error);
+		});
+
+		req.write(info.data);
+
+		req.end();
+	},
+
+	/*SEND MESSAGE MODULE*/
+	send: async function (message, client) {
+		const data = JSON.stringify({
+			content: `${message.msg || message}`,
+			components: [],
+		}); //Convert content to json
+
+		info = {
+			data: data,
+			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*HANDLE INTERACTION RECEIVE*/
+	receive_interaction: async function (interaction, client) {
+		//Response for interaction
+		const data = JSON.stringify({
+			type: interaction.type,
+			data: {
+				tts: false,
+				content: interaction.content || 'Slash',
+				embeds: [],
+				allowed_mentions: { parse: [] },
+			},
+		});
+
+		info = {
+			data: data,
+			path: `/api/interactions/${client.message.d.id}/${client.message.d.token}/callback`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
 	/*PRESENCE UPDATES*/
 	presence_update: async function (info, client) {
 		presence_update = {
@@ -122,5 +113,131 @@ module.exports = {
 		};
 
 		client.socket.send(JSON.stringify(presence_update));
+	},
+
+	/*Delete Slash global*/
+	del_slash: async function (command_id) {
+		info = {
+			data: null,
+			path: `/api/applications/${application_id}/commands/${command_id}`,
+			method: 'DELETE',
+		};
+
+		this.out(info);
+	},
+
+	/*Delete slash Guild*/
+	del_slash_guild: async function (command_id, guild_id) {
+		info = {
+			data: null,
+			path: `/api/applications/${application_id}/guilds/${guild_id}/commands/${command_id}`,
+			method: 'DELETE',
+		};
+
+		this.out(info);
+	},
+
+	/*Register slash*/
+	reg_slash: async function (data) {
+		info = {
+			data: data,
+			path: `/api/applications/${application_id}/commands`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*Register Slash Guild*/
+	reg_slash_guild: async function (data, guild_id) {
+		info = {
+			data: data,
+			path: `/api/applications/${application_id}/guilds/${guild_id}/commands`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*View slash*/
+	view_slash: async function () {
+		const options = {
+			hostname: 'discord.com', //Just discord.com
+			port: 443, //Secure port 443 aka https
+			path: `/api/applications/${application_id}/commands`, //To messages endpoint with variable channel_id
+			method: 'GET', //We delete something
+			headers: {
+				'Content-Type': 'application/json', //We notify that we use JSON
+				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
+			},
+		};
+
+		//We use the https module to send
+		const req = https.request(options, (res) => {
+			//We get some info in return
+			let fetch_data = [];
+
+			res.on('data', (d) => {
+				fetch_data.push(d);
+			});
+
+			res.on('end', async () => {
+				try {
+					let call_to = JSON.parse(fetch_data);
+
+					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+				} catch (error) {
+					console.log(action.tell_time('full'), error);
+				}
+			});
+		});
+
+		//If an error occurs we handle it here
+		req.on('error', (error) => {
+			console.log(action.tell_time('full'), error);
+		});
+
+		req.end();
+	},
+
+	/*View slash Guild*/
+	view_slash_guild: async function (guild_id) {
+		const options = {
+			hostname: 'discord.com', //Just discord.com
+			port: 443, //Secure port 443 aka https
+			path: `/api/applications/${application_id}/guilds/${guild_id}/commands`, //To messages endpoint with variable channel_id
+			method: 'GET', //We delete something
+			headers: {
+				'Content-Type': 'application/json', //We notify that we use JSON
+				Authorization: `Bot ${token}`, //And we send out info that we are a bot alongside our bot token
+			},
+		};
+
+		//We use the https module to send
+		const req = https.request(options, (res) => {
+			//We get some info in return
+			let fetch_data = [];
+
+			res.on('data', (d) => {
+				fetch_data.push(d);
+			});
+
+			res.on('end', async () => {
+				try {
+					let call_to = JSON.parse(fetch_data);
+
+					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
+				} catch (error) {
+					console.log(action.tell_time('full'), error);
+				}
+			});
+		});
+
+		//If an error occurs we handle it here
+		req.on('error', (error) => {
+			console.log(action.tell_time('full'), error);
+		});
+
+		req.end();
 	},
 };

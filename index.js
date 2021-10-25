@@ -10,34 +10,27 @@ async function start() {
 
 		/*When requested, commands get output trough here*/
 		mail_man.on('view_slash', async (client) => {
-			try {
-				if (!client) return;
+			if (!client) return;
 
-				console.log(client);
-			} catch (error) {
-				console.log(action.tell_time('full'), error);
-			}
+			console.log(client);
 		});
 
 		/*On any interaction this gets triggered*/
 		mail_man.on('INTERACTION_CREATE', async (client) => {
-			try {
-				//console.log(client);
-				action.send('test', client);
-				action.receive_interaction({ content: 'Just checking!', id: client.message.d.id, token: client.message.d.token, type: 4 }); //resolve command
-			} catch (error) {
-				console.log(action.tell_time('full'), error);
-			}
+			if (!client) return;
+
+			action.send('test', client);
+
+			action.receive_interaction({ content: 'Just checking!', type: 4 }, client); //resolve command
 		});
 
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
 		mail_man.once('READY', async (client) => {
-			try {
-				action.presence_update({}, client);
-				console.log(action.tell_time('full'), `\nBot started!\n\n`);
-			} catch (error) {
-				console.log(action.tell_time('full'), error);
-			}
+			if (!client) return;
+
+			action.presence_update({}, client);
+
+			console.log(action.tell_time('full'), `\nBot started!\n\n`);
 		});
 	} catch (error) {
 		console.log(error);
