@@ -54,9 +54,9 @@ module.exports = {
 								properties: {
 									$os: 'linux', //Identifying what OS we use
 
-									$browser: 'DJBSF 0.3', //For some reason they need to know our browser?
+									$browser: 'DJBSF', //For some reason they need to know our browser?
 
-									$device: 'DJBSF 0.3', //And they also want to know how we use Discord
+									$device: 'DJBSF', //And they also want to know how we use Discord
 								},
 							},
 						};
@@ -115,11 +115,17 @@ module.exports = {
 					pulse(3, rec_data); //READY needs the third shock
 				}
 
-				/*We cache guild introductions*/
-				if (event_type == 'GUILD_CREATE') discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
-				//discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
-				//parse_guilds = JSON.parse(discord_intel.guilds.slice(1, 1));
-				//console.log(parse_guilds['660988248788697100']);
+				/*We cache guild and user introductions*/
+				//find_guild = discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
+
+				//find_user = discord_intel.users.find(({ id }) => id === '127708549118689280'); //Find user in client cache
+				if (event_name == 'GUILD_CREATE') discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
+
+				if (rec_data.d && rec_data.d.author) {
+					user_get = discord_intel.users.find(({ id }) => id === rec_data.d.author.id);
+
+					if (!user_get) discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
+				}
 
 				/*When code is 10 Discord send a hello*/
 				if (event_code === 10 && discord_intel.dead == true) {
@@ -156,7 +162,7 @@ module.exports = {
 			socket.on('close', (code) => {
 				discord_intel.dead = true;
 
-				console.log(time_stamp.tell('full'), `Closed with code: ${code}`);
+				console.log(action.time_stamp('full'), `Closed with code: ${code}`);
 
 				setTimeout(startWebsocket, 5000);
 			});

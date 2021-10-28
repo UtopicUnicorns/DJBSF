@@ -9,28 +9,36 @@ async function start() {
 		heart_beat.rhythm(im); //start the process
 
 		/*When requested, commands get output trough here*/
-		mail_man.on('view_slash', async (client) => {
-			if (!client) return;
-
-			console.log(client);
-		});
+		mail_man.on('view_slash', async (client) => {});
 
 		/*On any interaction this gets triggered*/
 		mail_man.on('INTERACTION_CREATE', async (client) => {
-			if (!client) return;
-
-			action.send('test', client);
+			console.log(client.client);
+			//action.send('test', client);
 
 			action.receive_interaction({ content: 'Just checking!', type: 4 }, client); //resolve command
 		});
 
+		mail_man.on('MESSAGE_CREATE', async (client) => {});
+
 		/*When a ready event is emitted we will handle it here, you can decide to change .on() to .once()*/
 		mail_man.once('READY', async (client) => {
-			if (!client) return;
-
-			action.presence_update({}, client);
-
-			console.log(action.tell_time('full'), `\nBot started!\n\n`);
+			setInterval(async () => {
+				action.presence_update(
+					{
+						since: action.tell_time(),
+						activities: [
+							{
+								name: `${action.tell_time('full')} || ${client.message.d.guilds.length} Servers || ${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)} MB ram`,
+								type: 0,
+							},
+						],
+						status: 'dnd',
+						afk: false,
+					},
+					client
+				);
+			}, 10000);
 		});
 	} catch (error) {
 		console.log(error);
