@@ -13,10 +13,7 @@ async function start() {
 
 		/*On any interaction this gets triggered*/
 		mail_man.on('INTERACTION_CREATE', async (client) => {
-			console.log(client.client);
-			//action.send('test', client);
-
-			action.receive_interaction({ content: 'Just checking!', type: 4 }, client); //resolve command
+			action.receive_interaction({ content: 'I can see you', type: 4 }, client); //resolve command
 		});
 
 		mail_man.on('MESSAGE_CREATE', async (client) => {});

@@ -156,13 +156,13 @@ module.exports = {
 			});
 
 			/*If an error occurs we handle it here*/
-			socket.on('error', (error) => console.log(time_stamp.tell('full'), error));
+			socket.on('error', (error) => console.log(action.tell_time('full'), error));
 
 			/*When the connection gets broken we handle it here*/
 			socket.on('close', (code) => {
 				discord_intel.dead = true;
 
-				console.log(action.time_stamp('full'), `Closed with code: ${code}`);
+				console.log(action.tell_time('full'), `Closed with code: ${code}`);
 
 				setTimeout(startWebsocket, 5000);
 			});

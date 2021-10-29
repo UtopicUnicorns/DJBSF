@@ -61,7 +61,7 @@ module.exports = {
 	send: async function (message, client) {
 		const data = JSON.stringify({
 			content: `${message.msg || message}`,
-			components: [],
+			components: [message.components] || [],
 		}); //Convert content to json
 
 		info = {
@@ -82,6 +82,7 @@ module.exports = {
 				tts: false,
 				content: interaction.content || 'Slash',
 				embeds: [],
+				flags: 64,
 				allowed_mentions: { parse: [] },
 			},
 		});

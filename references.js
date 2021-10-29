@@ -7,6 +7,29 @@ find_guild = discord_intel.guilds.find(({ id }) => id === '628978428019736619');
 
 find_user = discord_intel.users.find(({ id }) => id === '127708549118689280'); //Find user in client cache
 
+action.receive_interaction({ content: '', type: 6 }, client); //resolve command
+
+action.receive_interaction({ content: 'Message', type: 4 }, client); //resolve command
+
+action.send(
+	{
+		msg: 'Hello!',
+		chan: '695182849476657223',
+		components: {
+			type: 1,
+			components: [
+				{
+					type: 2,
+					label: 'Click me!',
+					style: 1,
+					custom_id: 'click_one',
+				},
+			],
+		},
+	},
+	client
+);
+
 action.reg_slash(JSON);
 
 action.reg_slash_guild(JSON, GUILD_ID);
