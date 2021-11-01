@@ -116,15 +116,28 @@ module.exports = {
 				}
 
 				/*We cache guild and user introductions*/
-				//find_guild = discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
+				if (event_name == 'GUILD_CREATE') {
+					const guild_id = discord_intel.guilds.findIndex(({ id }) => id === rec_data.d.id);
 
-				//find_user = discord_intel.users.find(({ id }) => id === '127708549118689280'); //Find user in client cache
-				if (event_name == 'GUILD_CREATE') discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
+					if (guild_id === -1) {
+						discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
+					} else {
+						discord_intel.guilds.splice(guild_id, 1);
+
+						discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
+					}
+				}
 
 				if (rec_data.d && rec_data.d.author) {
-					user_get = discord_intel.users.find(({ id }) => id === rec_data.d.author.id);
+					const user_id = discord_intel.users.findIndex(({ id }) => id === rec_data.d.author.id);
 
-					if (!user_get) discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
+					if (user_id === -1) {
+						discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
+					} else {
+						discord_intel.users.splice(user_id, 1);
+
+						discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
+					}
 				}
 
 				/*When code is 10 Discord send a hello*/

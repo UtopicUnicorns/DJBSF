@@ -13,7 +13,9 @@ async function start() {
 
 		/*On any interaction this gets triggered*/
 		mail_man.on('INTERACTION_CREATE', async (client) => {
-			action.receive_interaction({ content: 'I can see you', type: 4 }, client); //resolve command
+			action.user_cache('127708549118689280', client);
+
+			action.receive_interaction({ content: 'test', type: 4 }, client);
 		});
 
 		mail_man.on('MESSAGE_CREATE', async (client) => {});

@@ -22,6 +22,24 @@ module.exports = {
 		}
 	},
 
+	/*Return user data*/
+	user_cache: function (id, client) {
+		const user_id = id;
+
+		const user_got = client.client.users.find(({ id }) => id === user_id);
+
+		return user_got;
+	},
+
+	/*Return guild data*/
+	guild_cache: function (id, client) {
+		const guild_id = id;
+
+		const guild_got = client.client.guilds.find(({ id }) => id === guild_id);
+
+		return guild_got;
+	},
+
 	/*send out*/
 	out: async function (info) {
 		const options = {

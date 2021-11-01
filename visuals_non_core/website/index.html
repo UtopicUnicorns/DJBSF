@@ -1,3 +1,16 @@
+<!--
+ ██▓███   ██▀███   ▒█████   ▄▄▄██▀▀▀▓█████  ▄████▄  ▄▄▄█████▓    ▄▄▄       ██▀███  ▄▄▄█████▓▓█████  ███▄ ▄███▓ ██▓  ██████
+▓██░  ██▒▓██ ▒ ██▒▒██▒  ██▒   ▒██   ▓█   ▀ ▒██▀ ▀█  ▓  ██▒ ▓▒   ▒████▄    ▓██ ▒ ██▒▓  ██▒ ▓▒▓█   ▀ ▓██▒▀█▀ ██▒▓██▒▒██    ▒
+▓██░ ██▓▒▓██ ░▄█ ▒▒██░  ██▒   ░██   ▒███   ▒▓█    ▄ ▒ ▓██░ ▒░   ▒██  ▀█▄  ▓██ ░▄█ ▒▒ ▓██░ ▒░▒███   ▓██    ▓██░▒██▒░ ▓██▄
+▒██▄█▓▒ ▒▒██▀▀█▄  ▒██   ██░▓██▄██▓  ▒▓█  ▄ ▒▓▓▄ ▄██▒░ ▓██▓ ░    ░██▄▄▄▄██ ▒██▀▀█▄  ░ ▓██▓ ░ ▒▓█  ▄ ▒██    ▒██ ░██░  ▒   ██▒
+▒██▒ ░  ░░██▓ ▒██▒░ ████▓▒░ ▓███▒   ░▒████▒▒ ▓███▀ ░  ▒██▒ ░     ▓█   ▓██▒░██▓ ▒██▒  ▒██▒ ░ ░▒████▒▒██▒   ░██▒░██░▒██████▒▒
+▒▓▒░ ░  ░░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒▓▒▒░   ░░ ▒░ ░░ ░▒ ▒  ░  ▒ ░░       ▒▒   ▓▒█░░ ▒▓ ░▒▓░  ▒ ░░   ░░ ▒░ ░░ ▒░   ░  ░░▓  ▒ ▒▓▒ ▒ ░
+░▒ ░       ░▒ ░ ▒░  ░ ▒ ▒░  ▒ ░▒░    ░ ░  ░  ░  ▒       ░         ▒   ▒▒ ░  ░▒ ░ ▒░    ░     ░ ░  ░░  ░      ░ ▒ ░░ ░▒  ░ ░
+░░         ░░   ░ ░ ░ ░ ▒   ░ ░ ░      ░   ░          ░           ░   ▒     ░░   ░   ░         ░   ░      ░    ▒ ░░  ░  ░
+            ░         ░ ░   ░   ░      ░  ░░ ░                        ░  ░   ░                 ░  ░       ░    ░        ░
+                                           ░
+© Richard Dorrestijn 2021
+-->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -39,8 +52,12 @@
 	</head>
 
 	<body>
+		<!--Image Background-->
+		<div class="bg_image"></div>
+
 		<!--Colour Background-->
 		<canvas id="colour_background"></canvas>
+
 		<!--Artemis Text-->
 		<div class="background_logo">
 			<div class="logo_box">
@@ -56,15 +73,24 @@
 				<div class="button_main_menu_holder">
 					<!--Main menu items-->
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Artemis_logo_g.png'); background-color: rgba(255, 255, 0, 0.2);">Home</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Github_logo.png'); background-color: rgba(255, 0, 0, 0.2);">GitHub</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Paypal_logo.png'); background-color: rgba(0, 255, 0, 0.2);">Donate</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Commands_logo.png'); background-color: rgba(255, 255, 255, 0.2);">Commands</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Add_logo.png'); background-color: rgba(0, 0, 255, 0.2);">Add Bot</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Project_logo.png'); background-color: rgba(255, 0, 255, 0.2);">DJBSF</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Discord_logo.png'); background-color: rgba(255, 0, 0, 0.2);">Discord</button><br />
+
 					<button class="button_main_menu" style="background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%), url('./images/Artemis_logo.png'); background-color: rgba(0, 255, 0, 0.2);">Credits</button><br />
+
 					<div class="slide_container">
-						<input type="range" id="slider_size" class="slider" min="14.0" max="28.0" step="1" value="14.0" />
+						<input type="range" id="slider_size" class="slider" min="18.0" max="38.0" step="1" value="18.0" />
+
 						<output class="bubble" id="bubble"></output>
 					</div>
 				</div>
@@ -89,6 +115,7 @@
 
 		<!--Scripts starter-->
 		<script src="./scripts/background_animation.js"></script>
+
 		<script src="./scripts/slider_size.js"></script>
 	</body>
 </html>

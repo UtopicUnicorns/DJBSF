@@ -3,13 +3,56 @@ action.send({ msg: CONTENT }, client); //Required
 
 action.send({ msg: CONTENT, chan: CHANNEL_ID }, client); //optionals
 
-find_guild = discord_intel.guilds.find(({ id }) => id === '628978428019736619'); //Find guild in client cache
+action.user_cache(USER_ID, client); //grab user from cache
 
-find_user = discord_intel.users.find(({ id }) => id === '127708549118689280'); //Find user in client cache
+action.guild_cache(GUILD_ID, client); //Grab guild from cache
 
 action.receive_interaction({ content: '', type: 6 }, client); //resolve command
 
 action.receive_interaction({ content: 'Message', type: 4 }, client); //resolve command
+
+action.send(
+	{
+		msg: 'Hello!',
+		components: {
+			type: 1,
+			components: [
+				{
+					type: 2,
+					label: 'Click me!',
+					style: 1,
+					custom_id: 'click_one',
+				},
+				{
+					type: 2,
+					label: 'Click me!',
+					style: 2,
+					custom_id: 'click_one1',
+				},
+				{
+					type: 2,
+					label: 'Click me!',
+					style: 3,
+					custom_id: 'click_one13',
+				},
+				{
+					type: 2,
+					label: 'Click me!',
+					style: 4,
+					disabled: true,
+					custom_id: 'click_one12',
+				},
+				{
+					type: 2,
+					label: 'Free cookies',
+					style: 5,
+					url: 'https://artemis.rest',
+				},
+			],
+		},
+	},
+	client
+);
 
 action.send(
 	{
@@ -129,8 +172,14 @@ let json2 = JSON.stringify({ name: 'High Five', type: 2 }); //user command
 
 let json3 = JSON.stringify({ name: 'High Five', type: 3 }); //message command
 
-
 /*
+Primary	1	blurple	custom_id
+Secondary	2	grey	custom_id
+Success	3	green	custom_id
+Danger	4	red	custom_id
+Link	5	grey, navigates to a URL	url
+
+
 CHAT_INPUT	1	Slash commands; a text-based command that shows up when a user types /
 USER	2	A UI-based command that shows up when you right click or tap on a user
 MESSAGE	3	A UI-based command that shows up when you right click or tap on a message
