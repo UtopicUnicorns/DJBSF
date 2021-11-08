@@ -13,7 +13,7 @@ exports.summon_modules = async function () {
 
 	heart_beat = await require('./heart_beat'); //Module to initiate and continue a link
 
-	action = await require('./client_actions/client_do'); //Client Actions
+	action = await require('./client_do'); //Client Actions
 
 	post_man = await require('events'); //Event handler, nodejs native
 

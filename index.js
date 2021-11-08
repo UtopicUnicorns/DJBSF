@@ -2,7 +2,7 @@
 So we use a special function that does that for us.*/
 async function start() {
 	try {
-		const im = await require('./core_modules/call_module'); //Import Functions and modules
+		const im = await require('./core/call_module'); //Import Functions and modules
 
 		await im.summon_modules(); //Initiate imports
 
