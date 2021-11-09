@@ -90,6 +90,9 @@ a {
 	background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%);
 	text-decoration: underline;
 	text-decoration-style: double;
+	padding-left: 1%;
+	padding-right: 1%;
+	border-radius: 0 50px 0 50px;
 }
 
 a:hover,
@@ -180,11 +183,12 @@ h6:focus {
 /*BUTTONS*/
 button {
 	height: 50px;
-	width: 200px;
+	width: auto;
 	text-align: right;
 	border-radius: 0 50px 0 50px;
 	border-width: 5px;
-	padding-right: 10px;
+	padding-right: 3%;
+	padding-left: 5%;
 	border-style: double;
 	border-color: rgba(0, 0, 0, 0.5);
 	background-color: rgba(255, 225, 255, 0.5);
@@ -195,7 +199,7 @@ button {
 button:hover,
 button:focus {
 	height: 50px;
-	width: 200px;
+	width: auto;
 	border-radius: 0 50px 0 50px;
 	border-width: 5px;
 	border-style: double;

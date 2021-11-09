@@ -40,9 +40,14 @@
 	</head>
 
 	<body>
+		<!--Background-->
 		<div class="background" id="background"></div>
+
+		<!--Content holder-->
 		<div class="content_box_holder">
+			<!--Box holder-->
 			<div class="content_box" id="content_box">
+				<!--Menu-->
 				<div class="menu_box">
 					<button class="home_button pulse" onclick="page(1)">test</button><br />
 					<button class="home_button pulse" onclick="page(2)">test</button><br />
@@ -53,6 +58,8 @@
 					<button class="home_button pulse" onclick="page(6)">test</button><br />
 					<button class="home_button pulse" onclick="page(300)">test</button><br />
 				</div>
+
+				<!--Content-->
 				<div class="content pulse" id="content">
 					<button class="pulse">Example</button><br />
 					<h1>Example</h1>
@@ -116,40 +123,7 @@
 			</div>
 		</div>
 
-		<script>
-			function page(dec) {
-				let bg_grab = document.getElementById('background').style;
-				let content_grab = document.getElementById('content');
-				let content_box = document.getElementById('content_box');
-				content_grab.style.animation = 'dissapear 2s';
-				content_box.style.background = `url("./images/${Math.floor(Math.random() * 5 + 1)}.png")`;
-				setTimeout(function () {
-					content_grab.style.animation = '';
-				}, 2000);
-				switch (dec) {
-					case 1:
-						bg_grab.filter = `hue-rotate(20deg)`;
-						content_grab.innerHTML = 'Hi';
-						break;
-
-					case 2:
-						bg_grab.filter = `hue-rotate(40deg)`;
-						content_grab.innerHTML = 'Hi2';
-						break;
-
-					case 3:
-						bg_grab.filter = `hue-rotate(60deg)`;
-						break;
-
-					case 4:
-						bg_grab.filter = `hue-rotate(80deg)`;
-						break;
-
-					default:
-						bg_grab.filter = `hue-rotate(100deg)`;
-						break;
-				}
-			}
-		</script>
+		<!--Scripts-->
+		<script src="./scripts/pages.js"></script>
 	</body>
 </html>
