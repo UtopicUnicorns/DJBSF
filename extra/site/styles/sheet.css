@@ -47,6 +47,7 @@
 	display: flex;
 	background: url('../images/1.png');
 	z-index: 999;
+	animation: appear 5s;
 }
 
 .content_box_holder {
@@ -72,8 +73,22 @@
 	border-width: 10px;
 	border-style: double;
 	border-color: rgba(0, 0, 0, 0.5);
-	background-color: rgba(255, 225, 255, 0.5);
+	background-color: rgba(255, 225, 255, 0.8);
 	box-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+	font-size: 100px;
+	color: rgba(255, 225, 255, 0.9);
+	text-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
+	margin: auto;
+	text-align: left;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	display: flex;
+	animation: logo 5s;
+	z-index: 999;
 }
 
 code {
@@ -218,7 +233,7 @@ button:focus {
 	border-width: 10px;
 	border-style: double;
 	border-color: rgba(0, 0, 0, 0.5);
-	background-color: rgba(255, 225, 255, 0.5);
+	background-color: rgba(255, 225, 255, 0.8);
 	background-image: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 51%);
 	box-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
 }
@@ -232,7 +247,7 @@ button:focus {
 	border-width: 10px;
 	border-style: double;
 	border-color: rgba(0, 0, 0, 0.5);
-	background-color: rgba(0, 255, 0, 0.5);
+	background-color: rgba(0, 255, 0, 0.8);
 	box-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -269,6 +284,40 @@ button:focus {
 	100% {
 		opacity: 1;
 		margin: 1%;
+	}
+}
+
+@keyframes appear {
+	0% {
+		opacity: 0;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes logo {
+	0% {
+		opacity: 0;
+		filter: blur(5);
+		transform: scale(3);
+	}
+
+	25% {
+		opacity: 1;
+		transform: scale(1);
+		filter: blur(1);
+	}
+
+	100% {
+		opacity: 1;
+		filter: blur(1);
+		opacity: 1;
 	}
 }
 
