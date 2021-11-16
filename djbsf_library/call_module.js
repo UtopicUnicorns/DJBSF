@@ -1,9 +1,9 @@
-exports.summon_modules = async function () {
+exports.summon_modules = async function (config) {
 	https = await require('https'); //Sending over https
 
 	ws = await require('./web_socket'); //Web socket stuff
 
-	configuration_data = await require('./configs.json'); //Load config file
+	configuration_data = await require(config); //Load config file
 
 	token = await configuration_data.bot_token; //Bot token
 
