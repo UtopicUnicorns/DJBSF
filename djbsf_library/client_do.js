@@ -60,17 +60,17 @@ module.exports = {
 				try {
 					const recData = JSON.parse(d); //we parse the received data to JSON
 				} catch (error) {
-					console.log(action.tell_time('full'), error);
+					console.log(error);
 				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(action.tell_time('full'), error);
+			console.log(error);
 		});
 
-		req.write(info.data);
+		if (info.data) req.write(info.data);
 
 		req.end();
 	},
@@ -86,6 +86,16 @@ module.exports = {
 			data: data,
 			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`,
 			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*DELETE MESSAGE MODULE*/
+	delete: async function (message, client) {
+		info = {
+			path: `/api/channels/${message.chan}/messages/${message.id}`,
+			method: 'DELETE',
 		};
 
 		this.out(info);
@@ -199,14 +209,14 @@ module.exports = {
 
 					mail_man.emit('view_slash', call_to); //Give mail_man the data to shoot out an event
 				} catch (error) {
-					console.log(action.tell_time('full'), error);
+					console.log(error);
 				}
 			});
 		});
 
 		//If an error occurs we handle it here
 		req.on('error', (error) => {
-			console.log(action.tell_time('full'), error);
+			console.log(error);
 		});
 
 		req.end();

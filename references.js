@@ -7,6 +7,8 @@ action.user_cache(USER_ID, client); //grab user from cache
 
 action.guild_cache(GUILD_ID, client); //Grab guild from cache
 
+action.delete({ chan: ID, id: MSGID }, client); //Delete selected message
+
 action.receive_interaction({ content: '', type: 6 }, client); //resolve command
 
 action.receive_interaction({ content: 'Message', type: 4 }, client); //resolve command
