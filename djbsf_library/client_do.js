@@ -59,6 +59,8 @@ module.exports = {
 			res.on('data', async (d) => {
 				try {
 					const recData = JSON.parse(d); //we parse the received data to JSON
+
+					return recData;
 				} catch (error) {
 					console.log(error);
 				}
@@ -96,6 +98,58 @@ module.exports = {
 		info = {
 			path: `/api/channels/${message.chan}/messages/${message.id}`,
 			method: 'DELETE',
+		};
+
+		this.out(info);
+	},
+
+	/*BULK DELETE MESSAGE MODULE*/
+	delete_bulk: async function (message, client) {
+		const data = JSON.stringify({
+			messages: message.msg_array, //an array of message ids to delete (2-100)
+		}); //Convert content to json
+
+		info = {
+			data: data,
+			path: `/api/channels/${message.chan}/messages/bulk-delete`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*CHANNEL INVITES GET MODULE*/
+	channel_invites_get: async function (message, client) {
+		info = {
+			path: `/api/channels/${message.chan}/invites`,
+			method: 'GET',
+		};
+
+		this.out(info);
+	},
+
+	/*CHANNEL INVITES CREATE MODULE*/ //https://discord.com/developers/docs/resources/channel#create-channel-invite
+	channel_invites_create: async function (message, client) {
+		info = {
+			path: `/api/channels/${message.chan}/invites`,
+			method: 'POST',
+		};
+
+		this.out(info);
+	},
+
+	/*CHANNEL PERMISSIONS MODULE*/
+	channel_permission: async function (message, client) {
+		const data = JSON.stringify({
+			allow: message.allow, //bitstring
+			deny: message.deny, //bitstring
+			type: message.type, //0 for a role or 1 for a member
+		}); //Convert content to json
+
+		info = {
+			data: data,
+			path: `/api/channels/${message.chan}/permissions/${message.id}`, //id is userid or role id
+			method: 'PUT',
 		};
 
 		this.out(info);
