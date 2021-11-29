@@ -3,19 +3,12 @@ module.exports = {
 		/*Collection of info*/
 		let discord_intel = {
 			dead: true, //Connection dead or alive?
-
 			client: null, //Client cache
-
 			guilds: [], //Client guilds
-
 			users: [], //Client users
-
 			beat_interval: null, //API given interval
-
 			beating_heart: null, //How many heartbeats are send
-
 			seq_num: null, //API sequence number
-
 			ses_num: null, //API session number
 		};
 
@@ -28,7 +21,6 @@ module.exports = {
 					case 1: //First pulse, we shoot a hello trough the gateway
 						shock_1 = {
 							op: 1, //OP 1 code is for the heartbeat
-
 							d: null, //At this stage we do not have a sequence number yet
 						};
 
@@ -48,14 +40,10 @@ module.exports = {
 
 							d: {
 								token: token, //Bot token
-
 								intents: intents_num, //Basically what we want to receive, this is no guarantee to get it if the intents are not met
-
 								properties: {
 									$os: 'linux', //Identifying what OS we use
-
 									$browser: 'DJBSF', //For some reason they need to know our browser?
-
 									$device: 'DJBSF', //And they also want to know how we use Discord
 								},
 							},
@@ -83,7 +71,6 @@ module.exports = {
 
 					send_beat = {
 						op: 1, //OP code has to be 1
-
 						d: discord_intel.seq_num, //sequence number given by the last event of the socket
 					};
 
@@ -148,9 +135,7 @@ module.exports = {
 
 							d: {
 								token: `${token}`, //Bot token
-
 								session_id: discord_intel.ses_num, //stored session number
-
 								seq: discord_intel.seq_num, //last known sequence number
 							},
 						};

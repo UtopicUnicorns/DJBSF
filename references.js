@@ -1,3 +1,108 @@
+//EMBED!
+let json = {
+	channel_id: '', //string
+	content: '', //string
+	tts: false, //boolean
+	embeds: [
+		{
+			type: 'rich', //type
+			title: '', //string
+			description: '', //string
+			color: 0x74abab, //val
+			fields: [
+				{
+					name: '', //string
+					value: '', //string
+					inline: true, //boolean
+				},
+				{
+					name: '', //string
+					value: '', //string
+				},
+			],
+			timestamp: '', //string
+			image: {
+				url: '', //string
+				proxy_url: '', //string
+				height: 40, //int
+				width: 40, //int
+			},
+			thumbnail: {
+				url: '', //string
+				proxy_url: '', //string
+				height: 50, //int
+				width: 50, //int
+			},
+			author: {
+				name: '', //string
+				url: '', //string
+				icon_url: '', //string
+				proxy_icon_url: '', //string
+			},
+			footer: {
+				text: '', //string
+				icon_url: '', //string
+				proxy_icon_url: '', //string
+			},
+			url: '', //string
+		},
+	],
+};
+
+//components
+let json = {
+	channel_id: '',
+	content: '',
+	tts: false,
+	components: [
+		{
+			type: 1, //type
+			components: [
+				{
+					custom_id: '', //string
+					placeholder: '', //string
+					options: [
+						{
+							label: '', //string
+							value: '', //string
+							description: '', //string
+							default: true, //coolean
+						},
+						{
+							label: '', //string
+							value: '', //string
+							description: '', //string
+							default: false, //boolean
+						},
+					],
+					min_values: 1, //int
+					max_values: 1, //int
+					type: 3, //type
+				},
+			],
+		},
+		{
+			type: 1, //type
+			components: [
+				{
+					style: 5, //int
+					label: '', //string
+					url: '', //string
+					disabled: false, //boolean
+					type: 2, //type
+				},
+				{
+					style: 3, //int
+					label: '', //string
+					custom_id: '', //string
+					disabled: true, //boolean
+					type: 2, //type
+				},
+			],
+		},
+	],
+};
+
 /*Sending a message*/
 action.send({ msg: CONTENT }, client); //Required
 

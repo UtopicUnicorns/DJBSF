@@ -15,6 +15,10 @@ exports.summon_modules = async function (config) {
 
 	action = await require('./client_do'); //Client Actions
 
+	embed_construct = await require('./embed');
+
+	embed = new embed_construct();
+
 	post_man = await require('events'); //Event handler, nodejs native
 
 	class Emitter extends post_man {}
