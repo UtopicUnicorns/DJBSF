@@ -58,9 +58,9 @@ module.exports = {
 			//We get some info in return
 			res.on('data', async (d) => {
 				try {
-					const recData = JSON.parse(d); //we parse the received data to JSON
+					JSON.parse(d); //we parse the received data to JSON
 
-					return recData;
+					return this;
 				} catch (error) {
 					console.log(error);
 				}
@@ -79,13 +79,19 @@ module.exports = {
 
 	/*SEND MESSAGE MODULE*/
 	send: async function (message, client) {
-		const data = JSON.stringify({
+		const data = {
 			content: `${message.msg || message}`,
 			components: [message.components] || [],
-		}); //Convert content to json
+			embeds: [message.embeds] || [],
+		};
+
+		if (!data.components) delete data['components'];
+		if (!data.embeds) delete data['embeds'];
+
+		console.log(data);
 
 		info = {
-			data: data,
+			data: JSON.stringify(data),
 			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`,
 			method: 'POST',
 		};
@@ -118,8 +124,6 @@ module.exports = {
 		this.out(info);
 	},
 
-	
-
 	/*CHANNEL INVITES GET MODULE*/
 	channel_invites_get: async function (message, client) {
 		info = {
@@ -128,10 +132,9 @@ module.exports = {
 		};
 
 		this.out(info);
-	},
+	}, //https://discord.com/developers/docs/resources/channel#create-channel-invite
 
-	/*CHANNEL INVITES CREATE MODULE*/ //https://discord.com/developers/docs/resources/channel#create-channel-invite
-	channel_invites_create: async function (message, client) {
+	/*CHANNEL INVITES CREATE MODULE*/ channel_invites_create: async function (message, client) {
 		info = {
 			path: `/api/channels/${message.chan}/invites`,
 			method: 'POST',
