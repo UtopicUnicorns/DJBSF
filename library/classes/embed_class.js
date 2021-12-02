@@ -1,35 +1,35 @@
 class embed_construct {
 	constructor() {
 		this.data = {
-			title: '', //string
-			description: '', //string
-			color: 0xff0000, //val
+			title: '',
+			description: '',
+			color: 0xff0000,
 			fields: [],
-			timestamp: '', //string
+			timestamp: '',
 			image: {
-				url: '', //string
-				proxy_url: '', //string
-				height: 40, //int
-				width: 40, //int
+				url: '',
+				proxy_url: '',
+				height: 40,
+				width: 40,
 			},
 			thumbnail: {
-				url: '', //string
-				proxy_url: '', //string
-				height: 50, //int
-				width: 50, //int
+				url: '',
+				proxy_url: '',
+				height: 50,
+				width: 50,
 			},
 			author: {
-				name: '', //string
-				url: '', //string
-				icon_url: '', //string
-				proxy_icon_url: '', //string
+				name: '',
+				url: '',
+				icon_url: '',
+				proxy_icon_url: '',
 			},
 			footer: {
-				text: '', //string
-				icon_url: '', //string
-				proxy_icon_url: '', //string
+				text: '',
+				icon_url: '',
+				proxy_icon_url: '',
 			},
-			url: '', //string
+			url: '',
 		};
 	}
 

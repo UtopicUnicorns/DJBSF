@@ -12,22 +12,16 @@ class https_construct {
 		};
 
 		const req = https.request(options, (res) => {
-			//let collect_data;
+			res.on('data', async (data) => {});
 
-			res.on('data', async (data) => {
-				//collect_data += data;
-			});
-
-			res.on('end', async (data) => {
-				//console.log(collect_data);
-			});
+			res.on('end', async (data) => {});
 		});
 
 		req.on('error', (error) => {
 			console.log(error);
 		});
 
-		req.write(message);
+		if (message) req.write(message);
 
 		req.end();
 	}

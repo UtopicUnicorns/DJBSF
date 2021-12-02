@@ -17,8 +17,8 @@ class message_construct {
 		return;
 	}
 
-	delete() {
-		return;
+	delete(message) {
+		return fly.send('', `/api/channels/${message.channel}/messages/${message.id}`, 'DELETE');
 	}
 }
 

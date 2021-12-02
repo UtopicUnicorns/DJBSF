@@ -77,27 +77,6 @@ module.exports = {
 		req.end();
 	},
 
-	/*SEND MESSAGE MODULE*/
-	send: async function (message, client) {
-		const data = {
-			content: `${message.msg || message}`,
-			components: [message.components] || [],
-			embeds: [message.embeds] || [],
-		};
-
-		if (!data.components) delete data['components'];
-		if (!data.embeds) delete data['embeds'];
-
-		console.log(data);
-
-		info = {
-			data: JSON.stringify(data),
-			path: `/api/channels/${message.chan || client.message.d.channel_id}/messages`,
-			method: 'POST',
-		};
-
-		this.out(info);
-	},
 
 	/*DELETE MESSAGE MODULE*/
 	delete: async function (message, client) {
