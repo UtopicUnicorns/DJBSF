@@ -1,14 +1,11 @@
 class https_construct {
-	send(message, path, method) {
+	send(data, path, method, host, port, headers) {
 		const options = {
-			hostname: 'discord.com',
-			port: 443,
+			hostname: host,
+			port: port,
 			path: path,
 			method: method,
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bot ${token}`,
-			},
+			headers: headers,
 		};
 
 		const req = https.request(options, (res) => {
@@ -21,7 +18,7 @@ class https_construct {
 			console.log(error);
 		});
 
-		if (message) req.write(message);
+		if (data) req.write(data);
 
 		req.end();
 	}
