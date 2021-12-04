@@ -16,8 +16,10 @@ exports.summon_modules = async function (config) {
 	https_construct = await require('./classes/https_class');
 	fly = new https_construct();
 
-	embed_construct = await require('./classes/embed_class');
-	embed = new embed_construct();
+	embed = await require('./classes/embed_class');
+
+	component_construct = await require('./classes/component_class');
+	component = new component_construct();
 
 	message_construct = await require('./classes/message_class');
 	message = new message_construct();

@@ -2,7 +2,7 @@ class message_construct {
 	send(message) {
 		let constructed_message = {
 			content: message.content,
-			components: message.components,
+			components: [message.components],
 			embeds: [message.embeds],
 		};
 
