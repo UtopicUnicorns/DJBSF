@@ -18,8 +18,7 @@ exports.summon_modules = async function (config) {
 
 	embed = await require('./classes/embed_class');
 
-	component_construct = await require('./classes/component_class');
-	component = new component_construct();
+	component = await require('./classes/component_class');
 
 	message_construct = await require('./classes/message_class');
 	message = new message_construct();
