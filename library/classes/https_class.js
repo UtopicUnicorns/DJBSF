@@ -9,17 +9,29 @@ class https_construct {
 		};
 
 		const req = https.request(options, (res) => {
-			res.on('data', async (data) => {});
+			let collect = [];
 
-			res.on('end', async (data) => {});
+			res.on('data', async (data) => {
+				collect.push(data);
+			});
+
+			res.on('end', async (data) => {
+				try {
+					const parsed_data = await JSON.parse(collect.join(''));
+
+					if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) mail_man.emit('Error_catch', parsed_data);
+					if (parsed_data.code) mail_man.emit('Error_catch', parsed_data);
+				} catch (err) {
+					//mail_man.emit('Error_catch', err);
+				}
+			});
 		});
 
 		req.on('error', (error) => {
-			console.log(error);
+			mail_man.emit('Error_catch', error);
 		});
 
 		if (data) req.write(data);
-
 		req.end();
 	}
 }

@@ -25,11 +25,8 @@ module.exports = {
 						};
 
 						socket.send(JSON.stringify(shock_1)); //Send the first shock for info
-
 						discord_intel.beat_interval = data; //We have our heartbeat interval so we store it
-
 						heartbeat(); //We initiate the regular heartbeat
-
 						pulse(2, data); //We move on to phase 2
 
 						break;
@@ -37,7 +34,6 @@ module.exports = {
 					case 2: //Second pulse, we indentify ourselves to the gateway
 						shock_2 = {
 							op: 2, //OP 2 code wants us to send relevant data
-
 							d: {
 								token: token, //Bot token
 								intents: intents_num, //Basically what we want to receive, this is no guarantee to get it if the intents are not met
@@ -55,9 +51,7 @@ module.exports = {
 
 					case 3: //Third pulse, we gather relevant data to use
 						discord_intel.client = data; //We define the client_user after receiving the data
-
 						discord_intel.seq_num = data.s; //With our fresh sequence number we save it for use
-
 						discord_intel.ses_num = data.d.session_id; //session ID is used for resuming, we will store it for now
 
 						break;
@@ -98,7 +92,6 @@ module.exports = {
 				/*If event name is ready we shoot info into our cache and start the heartbeat*/
 				if (event_name == 'READY') {
 					discord_intel.client = rec_data.d; //Pushing client
-
 					pulse(3, rec_data); //READY needs the third shock
 				}
 
@@ -110,7 +103,6 @@ module.exports = {
 						discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
 					} else {
 						discord_intel.guilds.splice(guild_id, 1);
-
 						discord_intel.guilds.push({ id: rec_data.d.id, guild: rec_data.d });
 					}
 				}
@@ -122,7 +114,6 @@ module.exports = {
 						discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
 					} else {
 						discord_intel.users.splice(user_id, 1);
-
 						discord_intel.users.push({ id: rec_data.d.author.id, user: rec_data.d.author });
 					}
 				}
@@ -132,7 +123,6 @@ module.exports = {
 					if (discord_intel.ses_num && discord_intel.seq_num) {
 						resume = {
 							op: 6, //OP code 6 RESUME
-
 							d: {
 								token: `${token}`, //Bot token
 								session_id: discord_intel.ses_num, //stored session number
@@ -141,12 +131,10 @@ module.exports = {
 						};
 
 						socket.send(JSON.stringify(resume)); //Send message to the gateway to resume a session
-
 						discord_intel.dead = false;
 					} else {
 						if (rec_data.d) {
 							pulse(1, rec_data.d.heartbeat_interval); //op 10 code needs the first shock
-
 							discord_intel.dead = false;
 						}
 					}
@@ -154,14 +142,12 @@ module.exports = {
 			});
 
 			/*If an error occurs we handle it here*/
-			socket.on('error', (error) => console.log(error));
+			socket.on('error', (error) => mail_man.emit('Error_catch', error));
 
 			/*When the connection gets broken we handle it here*/
 			socket.on('close', (code) => {
 				discord_intel.dead = true;
-
-				console.log(`Closed with code: ${code}`);
-
+				mail_man.emit('Error_catch', `Socket closed: ${code}`);
 				setTimeout(startWebsocket, 5000);
 			});
 		}
