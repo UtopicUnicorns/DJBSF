@@ -1,5 +1,7 @@
 class component_construct {
 	constructor() {
+		this.count = 0;
+
 		this.data = {
 			type: 1,
 			components: [],
@@ -39,6 +41,8 @@ class component_construct {
 	}
 
 	button(label, custom, style, disabled, url) {
+		this.count++;
+
 		let button_info = {
 			style: style,
 			label: label,
