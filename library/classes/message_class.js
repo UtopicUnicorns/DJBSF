@@ -20,7 +20,6 @@ class message_construct {
 			embeds: [message.embeds],
 		};
 
-		if (!message.id) mail_man.emit('Error_catch', 'Message edits need an ID!');
 		if (!message.embeds) delete constructed_message['embeds'];
 		if (!message.components) delete constructed_message['components'];
 		if (!message.content) delete constructed_message['content'];
