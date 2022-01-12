@@ -19,19 +19,18 @@ class https_construct {
 				res.on('end', async (data) => {
 					try {
 						const parsed_data = await JSON.parse(collect.join(''));
+						if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject({ error: parsed_data, stack: 1 });
+						if (parsed_data.code) reject({ error: parsed_data, stack: 1 });
 
-						if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject({ error: parsed_data });
-						if (parsed_data.code) reject({ error: parsed_data });
-						
 						resolve(parsed_data);
 					} catch (err) {
-						reject({ error: err });
+						reject({ error: err, stack: 1 });
 					}
 				});
 			});
 
 			req.on('error', (err) => {
-				reject({ error: err });
+				reject({ error: err, stack: 1 });
 			});
 
 			if (data) req.write(data);

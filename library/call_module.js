@@ -20,6 +20,9 @@ exports.summon_modules = async function (config) {
 
 	component = await require('./classes/component_class');
 
+	cache_construct = await require('./classes/cache_class');
+	cache = new cache_construct();
+
 	message_construct = await require('./classes/message_class');
 	message = new message_construct();
 

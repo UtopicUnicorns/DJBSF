@@ -16,28 +16,10 @@ module.exports = {
 
 			var seconds = ('0' + date.getSeconds()).substr(-2);
 
-			return `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+			return `${year}/${month}/${day} ${hour}:${minutes}:${seconds}`;
 		} else {
 			return new Date(Date.now() * 1000).getTime();
 		}
-	},
-
-	/*Return user data*/
-	user_cache: function (id, client) {
-		const user_id = id;
-
-		const user_got = client.client.users.find(({ id }) => id === user_id);
-
-		return user_got;
-	},
-
-	/*Return guild data*/
-	guild_cache: function (id, client) {
-		const guild_id = id;
-
-		const guild_got = client.client.guilds.find(({ id }) => id === guild_id);
-
-		return guild_got;
 	},
 
 	/*send out*/
