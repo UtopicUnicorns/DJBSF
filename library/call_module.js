@@ -23,6 +23,10 @@ exports.summon_modules = async function (config) {
 	cache_construct = await require('./classes/cache_class');
 	cache = new cache_construct();
 
+	rel_construct = await require('./classes/release_class');
+	rel = new rel_construct();
+	rel.rel();
+
 	message_construct = await require('./classes/message_class');
 	message = new message_construct();
 
