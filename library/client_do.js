@@ -121,39 +121,6 @@ module.exports = {
 		this.out(info);
 	},
 
-	/*HANDLE INTERACTION RECEIVE*/
-	receive_interaction: async function (interaction, client) {
-		//Response for interaction
-		const data = JSON.stringify({
-			type: interaction.type,
-			data: {
-				tts: false,
-				content: interaction.content || 'Slash',
-				embeds: [],
-				flags: 64,
-				allowed_mentions: { parse: [] },
-			},
-		});
-
-		info = {
-			data: data,
-			path: `/api/interactions/${client.message.d.id}/${client.message.d.token}/callback`,
-			method: 'POST',
-		};
-
-		this.out(info);
-	},
-
-	/*PRESENCE UPDATES*/
-	presence_update: async function (info, client) {
-		presence_update = {
-			op: 3,
-			d: info,
-		};
-
-		client.socket.send(JSON.stringify(presence_update));
-	},
-
 	/*Delete Slash global*/
 	del_slash: async function (command_id) {
 		info = {

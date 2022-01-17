@@ -30,6 +30,26 @@ class message_construct {
 	delete(message) {
 		return fly.send('', `/api/channels/${message.channel}/messages/${message.id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
+
+	interaction(reply, message) {
+		//return console.log(message);
+		let constructed_message = {
+			type: reply.type,
+			data: {
+				content: reply.content,
+				components: reply.components,
+				embeds: [reply.embeds],
+				flags: 64,
+			},
+		};
+
+		if (!reply.type) delete constructed_message['type'];
+		if (!reply.embeds) delete constructed_message.data['embeds'];
+		if (!reply.components) delete constructed_message.data['components'];
+		if (!reply.content) delete constructed_message.data['content'];
+
+		return fly.send(JSON.stringify(constructed_message), `/api/interactions/${message.message.d.id}/${message.message.d.token}/callback`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+	}
 }
 
 module.exports = message_construct;
