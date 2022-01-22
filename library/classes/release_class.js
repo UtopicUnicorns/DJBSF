@@ -16,12 +16,18 @@ class rel_construct {
 			});
 
 			res.on('end', async (data) => {
-				collect = JSON.parse(collect);
+				try {
+					collect = JSON.parse(collect);
 
-				const release_file = await require('../REL');
-				 if (release_file.rel !== collect[0].name) {
-					 console.log(`NEW VERSION AVAILABLE!\n\nDate: ${collect[0].created_at}\nVersion: ${collect[0].name}\nDownload: ${collect[0].tarball_url}\n\nYOU ARE USING VERSION: ${release_file.rel}`)
-				 }
+					const release_file = await require('../REL');
+					if (release_file.rel !== collect[0].name) {
+						console.log(`NEW VERSION AVAILABLE!\n\nDate: ${collect[0].created_at}\nVersion: ${collect[0].name}\nDownload: ${collect[0].tarball_url}\n\nYOU ARE USING VERSION: ${release_file.rel}`);
+					} else {
+						console.log(`Your DJBSF library is up to date @ ${release_file.rel}`);
+					}
+				} catch (err) {
+					console.log('Unable to retrieve update data.');
+				}
 			});
 		});
 

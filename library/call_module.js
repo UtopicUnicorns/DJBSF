@@ -26,6 +26,9 @@ exports.summon_modules = async function (config) {
 	cache_construct = await require('./classes/cache_class');
 	cache = new cache_construct();
 
+	time_construct = await require('./classes/time_class');
+	time = new time_construct();
+
 	rel_construct = await require('./classes/release_class');
 	rel = new rel_construct();
 	rel.rel();
