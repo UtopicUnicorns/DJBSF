@@ -52,7 +52,14 @@ class time_construct {
 	}
 
 	clock() {
-		return;
+		const dTime = new Date();
+		const eu = dTime.toLocaleString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+		const us = dTime.toLocaleString([], { hour: 'numeric', minute: 'numeric', second: '2-digit', hour12: true });
+
+		return {
+			eu: eu,
+			us: us,
+		};
 	}
 }
 

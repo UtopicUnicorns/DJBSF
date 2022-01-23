@@ -1,27 +1,4 @@
 module.exports = {
-	/*RETURN TIME*/
-	tell_time: function (ver) {
-		if (ver == 'full') {
-			var date = new Date();
-
-			var year = date.getFullYear();
-
-			var month = ('0' + (date.getMonth() + 1)).substr(-2);
-
-			var day = ('0' + date.getDate()).substr(-2);
-
-			var hour = ('0' + date.getHours()).substr(-2);
-
-			var minutes = ('0' + date.getMinutes()).substr(-2);
-
-			var seconds = ('0' + date.getSeconds()).substr(-2);
-
-			return `${year}/${month}/${day} ${hour}:${minutes}:${seconds}`;
-		} else {
-			return new Date(Date.now() * 1000).getTime();
-		}
-	},
-
 	/*send out*/
 	out: async function (info) {
 		const options = {
@@ -59,16 +36,6 @@ module.exports = {
 		req.end();
 	},
 
-
-	/*DELETE MESSAGE MODULE*/
-	delete: async function (message, client) {
-		info = {
-			path: `/api/channels/${message.chan}/messages/${message.id}`,
-			method: 'DELETE',
-		};
-
-		this.out(info);
-	},
 
 	/*BULK DELETE MESSAGE MODULE*/
 	delete_bulk: async function (message, client) {
