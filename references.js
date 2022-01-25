@@ -1,61 +1,36 @@
-//components
-let json = {
-	channel_id: '',
-	content: '',
-	tts: false,
-	components: [
-		{
-			type: 1, //type
-			components: [
-				{
-					custom_id: '', //string
-					placeholder: '', //string
-					options: [
-						{
-							label: '', //string
-							value: '', //string
-							description: '', //string
-							default: true, //coolean
-						},
-						{
-							label: '', //string
-							value: '', //string
-							description: '', //string
-							default: false, //boolean
-						},
-					],
-					min_values: 1, //int
-					max_values: 1, //int
-					type: 3, //type
-				},
-			],
-		},
-		{
-			type: 1, //type
-			components: [
-				{
-					style: 5, //int
-					label: '', //string
-					url: '', //string
-					disabled: false, //boolean
-					type: 2, //type
-				},
-				{
-					style: 3, //int
-					label: '', //string
-					custom_id: '', //string
-					disabled: true, //boolean
-					type: 2, //type
-				},
-			],
-		},
-	],
-};
+message
+	.send({ content: message, channel: channel_id, embeds: array, components: array })
+	.then((val) => console.log(val))
+	.catch((err) => console.error(err));
 
-/*Sending a message*/
-action.send({ msg: CONTENT }, client); //Required
+message
+	.edit({ id: message_id, content: message, channel: channel_id, embeds: array, components: array })
+	.then((val) => console.log(val))
+	.catch((err) => console.error(err));
 
-action.send({ msg: CONTENT, chan: CHANNEL_ID }, client); //optionals
+message
+	.delete({ channel: channel_id, id: message_id })
+	.then((val) => console.log(val))
+	.catch((err) => console.error(err));
+
+message
+	.interaction({ type: int, content: message }, client)
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+bot.presence({ start: time_stamp, name: string_input, type: integer, status: string_status }, client);
+
+new component()
+	.button({ label: label, custom_id: custom_id, style: style, disabled: boolean, url: url })
+	.button({ label: label, custom_id: custom_id, style: style, disabled: boolean, url: url })
+	.button({ label: label, custom_id: custom_id, style: style, disabled: boolean, url: url })
+	.button({ label: label, custom_id: custom_id, style: style, disabled: boolean, url: url });
+
+new component()
+	.menu({ custom_id: custom_id, place_holder: place_holder, min_val: min_val, max_val: max_val })
+	.entry({ label: label, value: value, description: description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
+	.entry({ label: label, value: value, description: description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
+	.entry({ label: label, value: value, description: description, default: boolean, emoji: { name: name, id: id, animated: boolean } });
 
 action.user_cache(USER_ID, client); //grab user from cache
 
@@ -66,72 +41,6 @@ action.delete({ chan: ID, id: MSGID }, client); //Delete selected message
 action.delete_bulk({ chan: ID, msg_array: [msg_id, msg_id, msg_id] }, client); //Bulk Delete selected message
 
 action.channel_permission({ chan: ID, id: ID, type: INT, deny: BITSTRING, allow: BITSTRING }, client); //change channel permissions
-
-action.receive_interaction({ content: '', type: 6 }, client); //resolve command leave content empty
-
-action.receive_interaction({ content: 'Message', type: 4 }, client); //resolve command
-
-action.send(
-	{
-		msg: 'Hello!',
-		components: {
-			type: 1,
-			components: [
-				{
-					type: 2,
-					label: 'Click me!',
-					style: 1,
-					custom_id: 'click_one',
-				},
-				{
-					type: 2,
-					label: 'Click me!',
-					style: 2,
-					custom_id: 'click_one1',
-				},
-				{
-					type: 2,
-					label: 'Click me!',
-					style: 3,
-					custom_id: 'click_one13',
-				},
-				{
-					type: 2,
-					label: 'Click me!',
-					style: 4,
-					disabled: true,
-					custom_id: 'click_one12',
-				},
-				{
-					type: 2,
-					label: 'Free cookies',
-					style: 5,
-					url: 'https://artemis.rest',
-				},
-			],
-		},
-	},
-	client
-);
-
-action.send(
-	{
-		msg: 'Hello!',
-		chan: '695182849476657223',
-		components: {
-			type: 1,
-			components: [
-				{
-					type: 2,
-					label: 'Click me!',
-					style: 1,
-					custom_id: 'click_one',
-				},
-			],
-		},
-	},
-	client
-);
 
 action.reg_slash(JSON);
 
@@ -144,21 +53,6 @@ action.view_slash(GUILD_ID);
 action.del_slash(COMMAND_ID);
 
 action.del_slash_guild(COMMAND_ID, GUILD_ID);
-
-action.presence_update(
-	{
-		since: action.tell_time(),
-		activities: [
-			{
-				name: 'Testing',
-				type: 0,
-			},
-		],
-		status: 'dnd',
-		afk: false,
-	},
-	client
-);
 
 let commands = await JSON.stringify({
 	name: 'commands',

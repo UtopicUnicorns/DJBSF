@@ -61,6 +61,10 @@ class time_construct {
 			us: us,
 		};
 	}
+
+	stamp() {
+		return ~~(Date.now() / 1000);
+	}
 }
 
 module.exports = time_construct;

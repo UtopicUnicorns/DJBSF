@@ -1,6 +1,9 @@
 class component_construct {
 	constructor() {
-		this.count = 0;
+		this.menucount = 0;
+		this.buttoncount = 0;
+		this.menuBOOL = false;
+		this.buttonBOOL = false;
 
 		this.data = {
 			type: 1,
@@ -9,10 +12,16 @@ class component_construct {
 	}
 
 	get output() {
+		if (this.menuBOOL) console.log('True');
+		if (!this.menuBOOL) console.log('False');
 		return this.data;
 	}
 
 	menu() {
+		if (this.buttonBOOL) return this;
+		menucount++;
+		this.menuBOOL = true;
+
 		let menu_info = {
 			custom_id: '32231', //string
 			placeholder: '5544', //string
@@ -41,7 +50,9 @@ class component_construct {
 	}
 
 	button(label, custom, style, disabled, url) {
-		this.count++;
+		if (this.menuBOOL) return this;
+		this.buttoncount++;
+		this.buttonBOOL = true;
 
 		let button_info = {
 			style: style,

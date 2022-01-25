@@ -18,6 +18,7 @@ class https_construct {
 
 				res.on('end', async (data) => {
 					try {
+						if (!collect[0]) resolve("Empty response");
 						const parsed_data = await JSON.parse(collect.join(''));
 						if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject({ error: parsed_data, stack: 1 });
 						if (parsed_data.code) reject({ error: parsed_data, stack: 1 });
