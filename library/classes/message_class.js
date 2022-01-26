@@ -32,7 +32,6 @@ class message_construct {
 	}
 
 	interaction(reply, message) {
-		//return console.log(message);
 		let constructed_message = {
 			type: reply.type,
 			data: {

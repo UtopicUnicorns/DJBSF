@@ -2,10 +2,6 @@ class component_construct {
 	constructor() {
 		this.menuBOOL = false;
 		this.buttonBOOL = false;
-		this.button = {
-			type: 1,
-			components: [],
-		};
 
 		this.data = {
 			type: 1,
@@ -14,13 +10,7 @@ class component_construct {
 	}
 
 	get output() {
-		if (this.menuBOOL) {
-			return this.data;
-		}
-
-		if (this.buttonBOOL) {
-			return this.button;
-		}
+		return this.data;
 	}
 
 	menu(menudata) {
@@ -78,28 +68,26 @@ class component_construct {
 		return this;
 	}
 
-	button(label, custom, style, disabled, url) {
+	button(buttondata) {
 		if (this.menuBOOL) return this;
 		this.buttonBOOL = true;
 
 		let button_info = {
-			style: style,
-			label: label,
-			custom_id: custom,
-			url: url,
-			disabled: disabled || false,
+			label: buttondata.label,
+			custom_id: buttondata.custom_id,
+			style: buttondata.style,
+			disabled: buttondata.disabled,
+			url: buttondata.url,
 			type: 2,
 		};
 
-		if (!label) delete button_info['label'];
-		if (!custom) delete button_info['custom_id'];
-		if (!style) delete button_info['style'];
-		if (!disabled) button_info['disabled'] = false;
-		if (!url) delete button_info['url'];
-		if (url) button_info['style'] = 5;
-		if (url) delete button_info['custom_id'];
+		if (!buttondata.label) delete button_info['label'];
+		if (!buttondata.custom_id) delete button_info['custom_id'];
+		if (!buttondata.style) delete button_info['style'];
+		if (!buttondata.disabled) delete button_info['disabled'];
+		if (!buttondata.url) delete button_info['url'];
 
-		this.button.components.push(button_info);
+		this.data.components.push(button_info);
 
 		return this;
 	}
