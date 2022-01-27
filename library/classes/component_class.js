@@ -72,14 +72,30 @@ class component_construct {
 		if (this.menuBOOL) return this;
 		this.buttonBOOL = true;
 
-		let button_info = {
-			label: buttondata.label,
-			custom_id: buttondata.custom_id,
-			style: buttondata.style,
-			disabled: buttondata.disabled,
-			url: buttondata.url,
-			type: 2,
-		};
+		if (buttondata.emoji) {
+			var button_info = {
+				label: buttondata.label,
+				custom_id: buttondata.custom_id,
+				style: buttondata.style,
+				disabled: buttondata.disabled,
+				url: buttondata.url,
+				emoji: { name: buttondata.emoji.name, id: buttondata.emoji.id, animated: buttondata.emoji.boolean },
+				type: 2,
+			};
+
+			if (!buttondata.emoji.id) delete button_info.emoji['id'];
+			if (!buttondata.emoji.name) delete button_info.emoji['name'];
+			if (!buttondata.emoji.animated) delete button_info.emoji['animated'];
+		} else {
+			var button_info = {
+				label: buttondata.label,
+				custom_id: buttondata.custom_id,
+				style: buttondata.style,
+				disabled: buttondata.disabled,
+				url: buttondata.url,
+				type: 2,
+			};
+		}
 
 		if (!buttondata.label) delete button_info['label'];
 		if (!buttondata.custom_id) delete button_info['custom_id'];

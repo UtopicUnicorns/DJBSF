@@ -9,7 +9,7 @@ exports.summon_modules = async function (config) {
 	application_id = configuration_data.application_id;
 	intents_num = configuration_data.intents_num;
 
-	heart_beat = await require('./heart_beat');
+	//heart_beat = await require('./heart_beat');
 
 	action = await require('./client_do');
 
@@ -39,4 +39,8 @@ exports.summon_modules = async function (config) {
 	post_man = await require('events');
 	class Emitter extends post_man {}
 	mail_man = new Emitter();
+
+	heart_construct = await require('./classes/heart_class');
+	heart = new heart_construct();
+	heart.run(this);
 };
