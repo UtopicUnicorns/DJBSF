@@ -12,6 +12,9 @@ class heart_construct {
 			seq_num: null,
 			ses_num: null,
 		};
+
+		mail_man.on('socket_close', async (code) => this.restart());
+		mail_man.on('socket_error', async (error) => console.log(error));
 	}
 
 	run() {
@@ -21,8 +24,11 @@ class heart_construct {
 		return this;
 	}
 
-	tick() {
-    console.log(this.client_struct);
+	restart() {
+		this.puppet.close();
+		this.puppet = '';
+		setTimeout(() => this.run(), 5000);
+
 		return this;
 	}
 
@@ -33,18 +39,12 @@ class heart_construct {
 
 				console.log(msg);
 			} catch (err) {
-				console.log(err);
+				mail_man.emit('socket_error', error);
 			}
 		});
 
-		this.puppet.on('error', (error) => {
-			console.log(error);
-		});
-
-		this.puppet.on('close', (code) => {
-			this.puppet = '';
-			this.client_struct.dead = true;
-		});
+		this.puppet.on('error', (error) => mail_man.emit('socket_error', error));
+		this.puppet.on('close', (code) => mail_man.emit('socket_close', code));
 
 		return this;
 	}
