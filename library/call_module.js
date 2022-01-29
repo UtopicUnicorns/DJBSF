@@ -9,8 +9,6 @@ exports.summon_modules = async function (config) {
 	application_id = configuration_data.application_id;
 	intents_num = configuration_data.intents_num;
 
-	//heart_beat = await require('./heart_beat');
-
 	action = await require('./client_do');
 
 	https_construct = await require('./classes/https_class');
