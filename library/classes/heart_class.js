@@ -18,7 +18,7 @@ class heart_construct {
 				token: token,
 				intents: intents_num,
 				properties: {
-					$os: 'linux',
+					$os: process.platform,
 					$browser: 'DJBSF',
 					$device: 'DJBSF',
 				},

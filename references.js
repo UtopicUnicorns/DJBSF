@@ -24,12 +24,6 @@ new component()
 	.button({ label: unique_label, custom_id: unique_custom_id, style: style, disabled: boolean, emoji: { id: id, name: name, animated: boolean } })
 	.button({ label: unique_label, custom_id: unique_custom_id, style: style })
 	.button({ label: unique_label, style: style, disabled: boolean, url: url });
-/*BUTTON styles
-				Primary	1	blurple	custom_id
-				Secondary	2	grey	custom_id
-				Success	3	green	custom_id
-				Danger	4	red	custom_id
-				Link	5	grey, navigates to a URL	url*/
 
 new component()
 	.menu({ custom_id: custom_id, place_holder: place_holder, min_val: min_val, max_val: max_val })
@@ -37,14 +31,7 @@ new component()
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } });
 
-new embed()
-	.field(value, value, boolean)
-	.description(value).color(hex_value)
-	.title(value).url(value)
-	.author(value, img_value, url_value)
-	.thumbnail(url_value).image(img_value)
-	.footer(value, img_value)
-	.timestamp();
+new embed().field(value, value, boolean).description(value).color(hex_value).title(value).url(value).author(value, img_value, url_value).thumbnail(url_value).image(img_value).footer(value, img_value).timestamp();
 
 action.user_cache(USER_ID, client); //grab user from cache
 
