@@ -13,6 +13,10 @@ exports.summon_modules = async function (config) {
 
 	message_construct = await require('./classes/message_class');
 	message = new message_construct();
+	channel_construct = await require('./classes/channel_class');
+	channel = new channel_construct();
+	app_construct = await require('./classes/app_class');
+	app = new app_construct();
 	embed = await require('./classes/embed_class');
 	component = await require('./classes/component_class');
 

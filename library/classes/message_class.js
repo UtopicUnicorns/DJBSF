@@ -31,6 +31,14 @@ class message_construct {
 		return fly.send('', `/api/channels/${message.channel}/messages/${message.id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
+	bulk_delete(message) {
+		let constructed_message = {
+			messages: message.array,
+		};
+
+		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages/bulk-delete`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+	}
+
 	interaction(reply, message) {
 		let constructed_message = {
 			type: reply.type,

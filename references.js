@@ -14,6 +14,11 @@ message
 	.catch((err) => console.error(err));
 
 message
+	.bulk_delete({ channel: channel_id, array: [] })
+	.then((val) => console.log(val))
+	.catch((err) => console.error(err));
+
+message
 	.interaction({ type: int, content: message }, client)
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
@@ -33,15 +38,7 @@ new component()
 
 new embed().field(value, value, boolean).description(value).color(hex_value).title(value).url(value).author(value, img_value, url_value).thumbnail(url_value).image(img_value).footer(value, img_value).timestamp();
 
-action.user_cache(USER_ID, client); //grab user from cache
-
-action.guild_cache(GUILD_ID, client); //Grab guild from cache
-
-action.delete({ chan: ID, id: MSGID }, client); //Delete selected message
-
-action.delete_bulk({ chan: ID, msg_array: [msg_id, msg_id, msg_id] }, client); //Bulk Delete selected message
-
-action.channel_permission({ chan: ID, id: ID, type: INT, deny: BITSTRING, allow: BITSTRING }, client); //change channel permissions
+action.channel_permission({ chan: ID, id: ID, type: INT, deny: BITSTRING, allow: BITSTRING }, client);
 
 action.reg_slash(JSON);
 

@@ -36,22 +36,6 @@ module.exports = {
 		req.end();
 	},
 
-
-	/*BULK DELETE MESSAGE MODULE*/
-	delete_bulk: async function (message, client) {
-		const data = JSON.stringify({
-			messages: message.msg_array, //an array of message ids to delete (2-100)
-		}); //Convert content to json
-
-		info = {
-			data: data,
-			path: `/api/channels/${message.chan}/messages/bulk-delete`,
-			method: 'POST',
-		};
-
-		this.out(info);
-	},
-
 	/*CHANNEL INVITES GET MODULE*/
 	channel_invites_get: async function (message, client) {
 		info = {
