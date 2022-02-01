@@ -36,8 +36,19 @@ new component()
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } });
 
-new embed().field(value, value, boolean).description(value).color(hex_value).title(value).url(value).author(value, img_value, url_value).thumbnail(url_value).image(img_value).footer(value, img_value).timestamp();
+new embed()
+	.field(value, value, boolean)
+	.description(value)
+	.color(hex_value)
+	.title(value)
+	.url(value)
+	.author(value, img_value, url_value)
+	.thumbnail(url_value)
+	.image(img_value)
+	.footer(value, img_value)
+	.timestamp();
 
+//old
 action.channel_permission({ chan: ID, id: ID, type: INT, deny: BITSTRING, allow: BITSTRING }, client);
 
 action.reg_slash(JSON);
