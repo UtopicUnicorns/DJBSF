@@ -25,8 +25,28 @@ class channel_construct {
 		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/permissions/${message.target_id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
+	modify(message) {
+		let constructed_message = {
+			name: message.name,
+			parent_id: message.parent_id,
+			topic: message.topic,
+			nsfw: message.nsfw,
+			rate_limit_per_user: message.rate_limit_per_user,
+			position: message.position,
+		};
+
+		if (!message.name) delete constructed_message['name'];
+		if (!message.parent_id) delete constructed_message['parent_id'];
+		if (!message.topic) delete constructed_message['topic'];
+		if (!message.nsfw) delete constructed_message['nsfw'];
+		if (!message.rate_limit_per_user) delete constructed_message['rate_limit_per_user'];
+		if (!message.position) delete constructed_message['position'];
+
+		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}`, 'PATCH', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+	}
+
 	get(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send('', `/api/channels/${message}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	messages(message) {

@@ -14,12 +14,22 @@ message
 	.catch((err) => console.error(err));
 
 message
-	.bulk_delete({ channel: channel_id, array: [] })
+	.bulk_delete({ channel: channel_id, array: array })
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
 message
 	.interaction({ type: int, content: message }, client)
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+channel
+	.get(channel_id)
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+channel
+	.modify({ channel: channel_id, name: channel_name, position: integer, parent_id: channel_parent, topic: channel_topic, nsfw: boolean, rate_limit_per_user: integer })
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
@@ -36,17 +46,7 @@ new component()
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
 	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } });
 
-new embed()
-	.field(value, value, boolean)
-	.description(value)
-	.color(hex_value)
-	.title(value)
-	.url(value)
-	.author(value, img_value, url_value)
-	.thumbnail(url_value)
-	.image(img_value)
-	.footer(value, img_value)
-	.timestamp();
+new embed().field(value, value, boolean).description(value).color(hex_value).title(value).url(value).author(value, img_value, url_value).thumbnail(url_value).image(img_value).footer(value, img_value).timestamp();
 
 //old
 action.channel_permission({ chan: ID, id: ID, type: INT, deny: BITSTRING, allow: BITSTRING }, client);

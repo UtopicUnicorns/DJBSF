@@ -21,8 +21,9 @@ class https_construct {
 						if (!collect[0]) resolve('Empty response type.');
 
 						const parsed_data = await JSON.parse(collect.join(''));
-						if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject({ error: parsed_data, stack: 1 });
-						if (parsed_data.code) reject({ error: parsed_data, stack: 1 });
+						if (parsed_data.channel_id && isNaN(parsed_data.channel_id)) reject(parsed_data);
+						if (parsed_data.code) reject(parsed_data);
+						if (parsed_data.message == 'The resource is being rate limited.') reject(parsed_data);
 
 						resolve(parsed_data);
 					} catch (err) {
@@ -32,7 +33,7 @@ class https_construct {
 			});
 
 			req.on('error', (err) => {
-				reject({ error: err, stack: 1 });
+				reject(err);
 			});
 
 			if (data) req.write(data);
