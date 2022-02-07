@@ -50,11 +50,23 @@ class channel_construct {
 	}
 
 	messages(message) {
+		let constructed_message = {
+			limit: message.limit,
+			before: message.before,
+			after: message.after,
+			around: message.around,
+		};
+
+		if (!message.limit) delete constructed_message['limit'];
+		if (!message.before) delete constructed_message['before'];
+		if (!message.after) delete constructed_message['after'];
+		if (!message.around) delete constructed_message['around'];
+
 		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	message(message) {
-		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages/${message.id}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		return fly.send('', `/api/channels/${message.channel}/messages/${message.id}`, 'GET', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	crosspost(message) {

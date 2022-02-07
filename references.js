@@ -1,10 +1,10 @@
 message
-	.send({ content: message, channel: channel_id, embeds: array, components: array })
+	.send({ content: message, channel: channel_id, components: [components], embeds: [embeds], tts: boolean, message_reference: reference_id, sticker_ids: sticker, files: files, flags: flags, attachments: attachments, payload_json: payload })
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
 message
-	.edit({ id: message_id, content: message, channel: channel_id, embeds: array, components: array })
+	.edit({ content: message, id: message_id, channel: channel_id, components: [components], embeds: [embeds], tts: boolean, message_reference: reference_id, sticker_ids: sticker, files: files, flags: flags, attachments: attachments, payload_json: payload })
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
@@ -25,6 +25,16 @@ message
 
 channel
 	.get(channel_id)
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+channel
+	.message({ channel: channel_id, message: message_id })
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+channel
+	.messages({ channel: channel_id, limit: messages_amount, before: before_messageid, after: after_messageid, around: around_messageid })
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
