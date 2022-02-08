@@ -1,15 +1,42 @@
 message
-	.send({ content: message, channel: channel_id, components: [components], embeds: [embeds], tts: boolean, message_reference: reference_id, sticker_ids: sticker, files: files, flags: flags, attachments: attachments, payload_json: payload })
+	.send({
+		content: message,
+		channel: channel_id,
+		components: [components],
+		embeds: [embeds],
+		tts: boolean,
+		message_reference: reference_id,
+		sticker_ids: sticker,
+		files: files,
+		flags: flags,
+		attachments: attachments,
+		payload_json: payload,
+		guild: guild_id,
+	})
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
 message
-	.edit({ content: message, id: message_id, channel: channel_id, components: [components], embeds: [embeds], tts: boolean, message_reference: reference_id, sticker_ids: sticker, files: files, flags: flags, attachments: attachments, payload_json: payload })
+	.edit({
+		id: message_id,
+		content: message,
+		channel: channel_id,
+		components: [components],
+		embeds: [embeds],
+		tts: boolean,
+		message_reference: reference_id,
+		sticker_ids: sticker,
+		files: files,
+		flags: flags,
+		attachments: attachments,
+		payload_json: payload,
+		guild: guild_id,
+	})
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
 message
-	.delete({ channel: channel_id, id: message_id })
+	.delete({ channel: channel_id, id: message_id, reason: reason })
 	.then((val) => console.log(val))
 	.catch((err) => console.error(err));
 
@@ -42,6 +69,19 @@ channel
 	.modify({ channel: channel_id, name: channel_name, position: integer, parent_id: channel_parent, topic: channel_topic, nsfw: boolean, rate_limit_per_user: integer })
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
+
+app
+	.view({ guild: guild_id, command: command_id })
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+/*command
+|
+|__ subcommand
+|
+|__ subcommand-group
+    |
+    |__ subcommand*/
 
 bot.presence({ start: time_stamp, name: string_input, type: integer, status: string_status }, client);
 

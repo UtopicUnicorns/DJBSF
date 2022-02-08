@@ -5,7 +5,7 @@ class message_construct {
 			components: [message.components],
 			embeds: [message.embeds],
 			tts: message.tts,
-			message_reference: message.reference,
+			message_reference: { message_id: message.reference, channel_id: message.channel, guild_id: message.guild_id, fail_if_not_exists: false },
 			sticker_ids: message.sticker,
 			files: message.files,
 			flags: message.flags,
@@ -86,7 +86,17 @@ class message_construct {
 	}
 
 	delete(message) {
-		return fly.send('', `/api/channels/${message.channel}/messages/${message.id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
+		let constructed_message = {
+			channel: message.channel,
+			id: message.id,
+			reason: message.reason,
+		};
+
+		if (!message.reason) delete constructed_message['reason'];
+		if (!message.channel) delete constructed_message['channel'];
+		if (!message.id) delete constructed_message['id'];
+
+		return fly.send(JSON.stringify(constructed_message), `/api/channels/${message.channel}/messages/${message.id}`, 'DELETE', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
 
 	bulk_delete(message) {
