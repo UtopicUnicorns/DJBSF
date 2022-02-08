@@ -61,17 +61,36 @@ channel
 	.catch((err) => console.log(err));
 
 channel
-	.messages({ channel: channel_id, limit: messages_amount, before: before_messageid, after: after_messageid, around: around_messageid })
+	.messages({
+		channel: channel_id,
+		limit: messages_amount,
+		before: before_messageid,
+		after: after_messageid,
+		around: around_messageid,
+	})
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
 channel
-	.modify({ channel: channel_id, name: channel_name, position: integer, parent_id: channel_parent, topic: channel_topic, nsfw: boolean, rate_limit_per_user: integer })
+	.modify({
+		channel: channel_id,
+		name: channel_name,
+		position: integer,
+		parent_id: channel_parent,
+		topic: channel_topic,
+		nsfw: boolean,
+		rate_limit_per_user: integer,
+	})
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
 app
 	.view({ guild: guild_id, command: command_id })
+	.then((val) => console.log(val))
+	.catch((err) => console.log(err));
+
+app
+	.delete({ guild: guild_id, command: command_id })
 	.then((val) => console.log(val))
 	.catch((err) => console.log(err));
 
@@ -86,15 +105,53 @@ app
 bot.presence({ start: time_stamp, name: string_input, type: integer, status: string_status }, client);
 
 new component()
-	.button({ label: unique_label, custom_id: unique_custom_id, style: style, disabled: boolean, emoji: { id: id, name: name, animated: boolean } })
-	.button({ label: unique_label, custom_id: unique_custom_id, style: style })
-	.button({ label: unique_label, style: style, disabled: boolean, url: url });
+	.button({
+		label: unique_label,
+		custom_id: unique_custom_id,
+		style: style,
+		disabled: boolean,
+		emoji: { id: id, name: name, animated: boolean },
+	})
+	.button({
+		label: unique_label,
+		custom_id: unique_custom_id,
+		style: style,
+	})
+	.button({
+		label: unique_label,
+		style: style,
+		disabled: boolean,
+		url: url,
+	});
 
 new component()
-	.menu({ custom_id: custom_id, place_holder: place_holder, min_val: min_val, max_val: max_val })
-	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
-	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } })
-	.entry({ label: unique_label, value: unique_value, description: unique_description, default: boolean, emoji: { name: name, id: id, animated: boolean } });
+	.menu({
+		custom_id: custom_id,
+		place_holder: place_holder,
+		min_val: min_val,
+		max_val: max_val,
+	})
+	.entry({
+		label: unique_label,
+		value: unique_value,
+		description: unique_description,
+		default: boolean,
+		emoji: { name: name, id: id, animated: boolean },
+	})
+	.entry({
+		label: unique_label,
+		value: unique_value,
+		description: unique_description,
+		default: boolean,
+		emoji: { name: name, id: id, animated: boolean },
+	})
+	.entry({
+		label: unique_label,
+		value: unique_value,
+		description: unique_description,
+		default: boolean,
+		emoji: { name: name, id: id, animated: boolean },
+	});
 
 new embed().field(value, value, boolean).description(value).color(hex_value).title(value).url(value).author(value, img_value, url_value).thumbnail(url_value).image(img_value).footer(value, img_value).timestamp();
 
