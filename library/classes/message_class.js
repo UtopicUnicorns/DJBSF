@@ -112,16 +112,34 @@ class message_construct {
 			type: reply.type,
 			data: {
 				content: reply.content,
-				components: reply.components,
+				components: [reply.components],
 				embeds: [reply.embeds],
-				flags: 64,
+				tts: reply.tts,
+				message_reference: reply.reference,
+				sticker_ids: reply.sticker,
+				files: reply.files,
+				flags: reply.flags,
+				attachments: reply.attachments,
+				payload_json: reply.payload,
+				allowed_mentions: {
+					parse: [],
+				},
 			},
 		};
 
-		if (!reply.type) delete constructed_message['type'];
 		if (!reply.embeds) delete constructed_message.data['embeds'];
 		if (!reply.components) delete constructed_message.data['components'];
 		if (!reply.content) delete constructed_message.data['content'];
+		if (!reply.tts) delete constructed_message.data['tts'];
+		if (!reply.reference) delete constructed_message.data['message_reference'];
+		if (!reply.flags) delete constructed_message.data['flags'];
+		if (!reply.sticker) delete constructed_message.data['sticker_ids'];
+		if (!reply.files) delete constructed_message.data['files'];
+		if (!reply.attachments) delete constructed_message.data['attachments'];
+		if (!reply.payload) delete constructed_message.data['payload_json'];
+		if (!reply.type) delete constructed_message['type'];
+
+		console.log(constructed_message);
 
 		return fly.send(JSON.stringify(constructed_message), `/api/interactions/${message.message.d.id}/${message.message.d.token}/callback`, 'POST', 'discord.com', 443, { 'Content-Type': 'application/json', Authorization: `Bot ${token}` });
 	}
