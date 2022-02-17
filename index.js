@@ -7,4 +7,5 @@ async function start() {
 	}
 }
 
+
 start(); //Start async

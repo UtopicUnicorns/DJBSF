@@ -1,3 +1,5 @@
+//config.jsbeautify_args = {"-r", "-q", "-t", "-p", "-k", "-a", "-b preserve-inline"}
+
 message
 	.send({
 		content: message,
