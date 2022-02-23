@@ -2,6 +2,7 @@ exports.summon_modules = async function (config) {
 	https = await require('https');
 	fs = await require('fs');
 	ws = await require('./web_socket');
+	fd = await require('./form_data');
 
 	configuration_data = await require(config);
 	token = await configuration_data.bot_token;

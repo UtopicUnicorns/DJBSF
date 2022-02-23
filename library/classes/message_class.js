@@ -1,4 +1,52 @@
 class message_construct {
+	image(message) {
+		let constructed_message = {
+			content: "Hi all",
+			attachments: [{
+				id: 0,
+				description: "Image of a cute little cat",
+				filename: "pic.png",
+			}],
+			embeds: [{
+				title: "Hello, Embed!",
+				description: "This is an embedded message.",
+				image: {
+					url: "attachment://pic.png"
+				}
+			}],
+		};
+
+		let convertJSON = JSON.stringify(constructed_message);
+
+
+		// Specify form fields
+		const fields = {
+			paypload_json: convertJSON,
+			// Files should be an object with the name, type, and data set to strings
+			'files[0]': {
+				name: 'cat.gif',
+				type: 'image/gif',
+				data: `${message.file}`,
+			},
+		};
+
+		const boundary = fd.generateBoundary();
+		const header = {
+			'Content-Type': `multipart/form-data; boundary=${boundary}`
+		};
+		const body = fd(fields, boundary);
+console.log(body);
+		return fly.send(body,
+			`/api/channels/${message.channel}/messages`,
+			'POST',
+			'discord.com',
+			443, {
+				'Content-Type': `multipart/form-data; boundary=${boundary}`,
+				Authorization: `Bot ${token}`,
+			}
+		);
+	}
+
 	send(message) {
 		let constructed_message = {
 			content: message.content,
