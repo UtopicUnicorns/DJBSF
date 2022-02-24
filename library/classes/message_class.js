@@ -1,5 +1,6 @@
 class message_construct {
 	image(message) {
+
 		let constructed_message = {
 			content: "Hi all",
 			attachments: [{
@@ -7,44 +8,48 @@ class message_construct {
 				description: "Image of a cute little cat",
 				filename: "pic.png",
 			}],
-			embeds: [{
-				title: "Hello, Embed!",
-				description: "This is an embedded message.",
-				image: {
-					url: "attachment://pic.png"
-				}
-			}],
 		};
 
 		let convertJSON = JSON.stringify(constructed_message);
 
+		let promise = new Promise((resolve, reject) => {
+			fs.readFile('./pic.png', (err, data) => {
+				if (err) reject(err);
+				//const extensionName = path.extname('./pic.png');
+				//const base64Image = Buffer.from(data, 'binary').toString('base64');
+				//resolve(`data:image/${extensionName.split('.').pop()};base64,${base64Image}`);
+				
+				resolve(data);
+			});
+		});
 
-		// Specify form fields
-		const fields = {
-			paypload_json: convertJSON,
-			// Files should be an object with the name, type, and data set to strings
-			'files[0]': {
-				name: 'cat.gif',
-				type: 'image/gif',
-				data: `${message.file}`,
-			},
-		};
+		return promise.then((x) => {
+			const fields = {
+				payload_json: convertJSON,
 
-		const boundary = fd.generateBoundary();
-		const header = {
-			'Content-Type': `multipart/form-data; boundary=${boundary}`
-		};
-		const body = fd(fields, boundary);
-console.log(body);
-		return fly.send(body,
-			`/api/channels/${message.channel}/messages`,
-			'POST',
-			'discord.com',
-			443, {
-				'Content-Type': `multipart/form-data; boundary=${boundary}`,
-				Authorization: `Bot ${token}`,
-			}
-		);
+				'files[0]': {
+					name: 'pic.png',
+					type: 'image/png',
+					data: x,
+				},
+			};
+
+			const boundary = fd.generateBoundary();
+			const header = {
+				'Content-Type': `multipart/form-data; boundary=${boundary}`
+			};
+			const body = fd(fields, boundary);
+			//console.log(body);
+			return fly.send(body,
+				`/api/channels/${message.channel}/messages`,
+				'POST',
+				'discord.com',
+				443, {
+					'Content-Type': `multipart/form-data; boundary=${boundary}`,
+					Authorization: `Bot ${token}`,
+				}
+			);
+		});
 	}
 
 	send(message) {

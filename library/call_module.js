@@ -3,6 +3,7 @@ exports.summon_modules = async function (config) {
 	fs = await require('fs');
 	ws = await require('./web_socket');
 	fd = await require('./form_data');
+	path = await require('path');
 
 	configuration_data = await require(config);
 	token = await configuration_data.bot_token;
