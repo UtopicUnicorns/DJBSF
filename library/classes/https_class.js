@@ -8,7 +8,7 @@ class https_construct {
 				method: method,
 				headers: headers,
 			};
-			
+
 			const req = https.request(options, (res) => {
 				let collect = [];
 
@@ -17,7 +17,6 @@ class https_construct {
 				});
 
 				res.on('end', async (data) => {
-				
 					try {
 						if (!collect[0]) resolve('Empty response type.');
 
@@ -36,9 +35,12 @@ class https_construct {
 			req.on('error', (err) => {
 				reject(err);
 			});
-			
-			if (data) req.write(data);
-			
+
+			if (data) {
+			req.write(data[0][0]);
+			req.write(data[1]);
+			req.write(data[0][1]);
+			}
 			req.end();
 		});
 

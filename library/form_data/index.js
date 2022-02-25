@@ -1,5 +1,6 @@
 module.exports = (fields, boundary) => {
 	let body = '';
+	let body2 = '';
 
 	if (!boundary) boundary = module.exports.generateBoundary();
 	else if (typeof boundary !== 'string') throw new TypeError('`boundary` parameter should be a string.');
@@ -19,7 +20,7 @@ module.exports = (fields, boundary) => {
 					body += `--${boundary}\r\n`;
 					body += `Content-Disposition: form-data; name="${fieldName}"; filename="${field.name}"\r\n`;
 					body += `Content-Type: ${field.type}\r\n\r\n`;
-					body += `${field.data}\r\n`;
+					body2 += `\r\n`;
 				} else if (typeof field === 'string') {
 					body += `--${boundary}\r\n`;
 					body += `Content-Disposition: form-data; name="${fieldName}"\r\n\r\n`;
@@ -28,11 +29,11 @@ module.exports = (fields, boundary) => {
 			});
 		}
 
-		if (body.length) body += `--${boundary}--\r\n`;
+		if (body.length) body2 += `--${boundary}--\r\n`;
 	} else throw new TypeError('`fields` parameter is required and should be an object.');
 
 
-	return body;
+	return [body, body2];
 };
 
 module.exports.generateBoundary = () => {
