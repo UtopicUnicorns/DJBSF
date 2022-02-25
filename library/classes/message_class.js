@@ -21,11 +21,10 @@ class message_construct {
 				data.push(chunk);
 			});
 			readStream.on("end", (chunk) => {
-				const base64Image = Buffer.concat(data).toString("base64");
-				console.log("data:image/" + extensionName + ";base64," + base64Image);
+				resolve(Buffer.concat(data).toString("utf-8"));
 			});
 			readStream.on("error", (err) => {
-				console.log(err);
+				reject(err);
 			});
 		});
 
