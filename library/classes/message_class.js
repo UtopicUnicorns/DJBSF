@@ -8,6 +8,31 @@ class message_construct {
 				description: "Image of a cute little cat",
 				filename: "pic.png",
 			}],
+			components: [
+				{
+					type: 1,
+					components: [
+						{
+							type: 2,
+							label: "Click me!",
+							style: 1,
+							custom_id: "click_one"
+                }
+            ]
+
+        }
+    ],
+			embeds: [
+				{
+					type: "rich",
+					title: `no`,
+					description: `yes`,
+					color: 0x00FFFF,
+					image: {
+						url: 'attachment://pic.png',
+					},
+    }
+  ]
 		};
 
 		let convertJSON = JSON.stringify(constructed_message);
@@ -17,15 +42,15 @@ class message_construct {
 			const extensionName = path.split(".").pop();
 			const readStream = fs.createReadStream(path);
 			const data = [];
-			
+
 			readStream.on("data", (chunk) => {
 				data.push(chunk);
 			});
-			
+
 			readStream.on("end", (chunk) => {
 				resolve(Buffer.concat(data));
 			});
-			
+
 			readStream.on("error", (err) => {
 				reject(err);
 			});
@@ -47,7 +72,7 @@ class message_construct {
 				'Content-Type': `multipart/form-data; boundary=${boundary}`
 			};
 			const body = fd(fields, boundary);
-		//	console.log(body);
+			//	console.log(body);
 			return fly.send([body, x],
 				`/api/channels/${message.channel}/messages`,
 				'POST',

@@ -71,7 +71,7 @@ class heart_construct {
 	}
 
 	run() {
-		this.puppet = new ws.WebSocket('wss://gateway.discord.gg/?v=9&encoding=json');
+		this.puppet = new ws.WebSocket('wss://gateway.discord.gg/?v=10&encoding=json');
 		this.socket();
 
 		return this;
