@@ -13,13 +13,19 @@ class message_construct {
 		let convertJSON = JSON.stringify(constructed_message);
 
 		let promise = new Promise((resolve, reject) => {
-			fs.readFile('./pic.png', (err, data) => {
-				if (err) reject(err);
-				//const extensionName = path.extname('./pic.png');
-				//const base64Image = Buffer.from(data, 'binary').toString('base64');
-				//resolve(`data:image/${extensionName.split('.').pop()};base64,${base64Image}`);
-				
-				resolve(data);
+			const path = "pic.png"
+			const extensionName = path.split(".").pop();
+			const readStream = fs.createReadStream(path);
+			const data = [];
+			readStream.on("data", (chunk) => {
+				data.push(chunk);
+			});
+			readStream.on("end", (chunk) => {
+				const base64Image = Buffer.concat(data).toString("base64");
+				console.log("data:image/" + extensionName + ";base64," + base64Image);
+			});
+			readStream.on("error", (err) => {
+				console.log(err);
 			});
 		});
 
