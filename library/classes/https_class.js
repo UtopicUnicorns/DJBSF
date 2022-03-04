@@ -37,9 +37,9 @@ class https_construct {
 			});
 
 			if (data) {
-			req.write(data[0][0]);
-			req.write(data[1]);
-			req.write(data[0][1]);
+			req.write(data);
+		//	req.write(data[1]);
+		//	req.write(data[0][1]);
 			}
 			req.end();
 		});

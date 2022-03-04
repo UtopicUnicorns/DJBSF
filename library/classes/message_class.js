@@ -1,6 +1,5 @@
 class message_construct {
 	image(message) {
-
 		let constructed_message = {
 			content: "Hi all",
 			attachments: [{
@@ -38,22 +37,12 @@ class message_construct {
 		let convertJSON = JSON.stringify(constructed_message);
 
 		let promise = new Promise((resolve, reject) => {
-			const path = "pic.png"
-			const extensionName = path.split(".").pop();
-			const readStream = fs.createReadStream(path);
-			const data = [];
+			let imageArray = [];
 
-			readStream.on("data", (chunk) => {
-				data.push(chunk);
-			});
+			imageArray.push(fs.readFileSync('pic.png'));
+			imageArray.push(fs.readFileSync('rick.gif'));
 
-			readStream.on("end", (chunk) => {
-				resolve(Buffer.concat(data));
-			});
-
-			readStream.on("error", (err) => {
-				reject(err);
-			});
+			resolve(imageArray);
 		});
 
 		return promise.then((x) => {
@@ -63,8 +52,10 @@ class message_construct {
 				'files[0]': {
 					name: 'pic.png',
 					type: 'image/png',
-					data: x,
+					data: x[0],
 				},
+				
+	
 			};
 
 			const boundary = fd.generateBoundary();
@@ -72,8 +63,19 @@ class message_construct {
 				'Content-Type': `multipart/form-data; boundary=${boundary}`
 			};
 			const body = fd(fields, boundary);
-			//	console.log(body);
-			return fly.send([body, x],
+
+			let split = body.split("IMAGEBUFFER");
+
+			console.log(split);
+			let split1 = Buffer.from(x[0]);
+			let split2 = Buffer.from(split[0]);
+			let split3 = Buffer.from(split[1]);
+			let finalArray = [split2, split1, split3];
+			console.log(finalArray);
+			let newBuffer = Buffer.concat(finalArray);
+
+
+			return fly.send(newBuffer,
 				`/api/channels/${message.channel}/messages`,
 				'POST',
 				'discord.com',
